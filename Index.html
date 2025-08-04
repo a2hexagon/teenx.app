@@ -539,6 +539,38 @@
             border: none;
         }
 
+        /* Custom Play Button Overlay for Video */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            z-index: 1; /* Ensure it's above the iframe */
+        }
+
+        .video-overlay:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .video-overlay .play-button {
+            font-size: 4rem;
+            color: var(--white);
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-overlay:hover .play-button {
+            opacity: 1;
+        }
+
+
         /* Campaign Image Carousel */
         .campaign-carousel-container {
             margin: 0 auto 4rem;
@@ -903,8 +935,8 @@
         }
 
         .projects-carousel .carousel-item-wrapper {
-            height: 10px !important; /* Fixed height for the container */
-            width: 20px !important; /* Fixed width for the container, ensuring rectangular shape */
+            height: 60px; /* Fixed height for the container */
+            width: 120px; /* Fixed width for the container, ensuring rectangular shape */
             flex-shrink: 0; /* Prevent shrinking too much */
             flex-grow: 0; /* Prevent growing too much */
             display: flex; /* Use flex to center image inside */
@@ -1342,7 +1374,10 @@
                 
                 <!-- Embedded Video -->
                 <div class="video-container reveal">
-                    <iframe src="https://www.youtube.com/embed/Ve1TdpvT798" title="TeenX Campaign Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe id="youtube-video" src="https://www.youtube.com/embed/Ve1TdpvT798?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&enablejsapi=1" title="TeenX Campaign Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="video-overlay">
+                        <i class="fas fa-play play-button"></i>
+                    </div>
                 </div>
 
                 <!-- Campaign Images Carousel -->
@@ -1842,10 +1877,10 @@
                     return new Promise(resolve => {
                         const img = new Image();
                         img.src = src;
-                        img.onload = () => resolve(`<div class="${itemWrapperClass}"><img src="${src}" alt="${prefix}" class="${imageClass}"></div>`);
+                        img.onload = () => resolve(`<div class="${itemWrapperClass}"><img src="${src}" alt="${prefix}" class="${imageClass}" loading="lazy"></div>`);
                         img.onerror = () => {
                             // Use fallback image if provided, otherwise an empty string
-                            resolve(fallbackImageUrl ? `<div class="${itemWrapperClass}"><img src="${fallbackImageUrl}" alt="Placeholder" class="${imageClass}"></div>` : '');
+                            resolve(fallbackImageUrl ? `<div class="${itemWrapperClass}"><img src="${fallbackImageUrl}" alt="Placeholder" class="${imageClass}" loading="lazy"></div>` : '');
                         };
                     });
                 });
@@ -1915,6 +1950,63 @@
                     showTestimonial(currentTestimonial);
                 }, 5000);
             }
+
+            // YouTube Video Play/Pause Logic
+            const youtubeVideoContainer = document.querySelector('.video-container');
+            const youtubeVideoIframe = document.getElementById('youtube-video');
+            const videoOverlay = document.querySelector('.video-overlay');
+            const playButtonIcon = document.querySelector('.video-overlay .play-button');
+            let player; // YouTube Player API object
+
+            // Load YouTube IFrame API asynchronously
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            window.onYouTubeIframeAPIReady = function() {
+                player = new YT.Player('youtube-video', {
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+            }
+
+            function onPlayerReady(event) {
+                // Mute and autoplay on ready, then pause and show overlay
+                event.target.mute();
+                event.target.playVideo();
+                // A small delay to ensure autoplay starts before pausing
+                setTimeout(() => {
+                    event.target.pauseVideo();
+                    videoOverlay.style.display = 'flex'; // Show overlay
+                }, 500); 
+            }
+
+            function onPlayerStateChange(event) {
+                if (event.data == YT.PlayerState.PLAYING) {
+                    videoOverlay.style.display = 'none'; // Hide overlay when playing
+                    playButtonIcon.classList.remove('fa-pause');
+                    playButtonIcon.classList.add('fa-play');
+                } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+                    videoOverlay.style.display = 'flex'; // Show overlay when paused or ended
+                    playButtonIcon.classList.remove('fa-pause');
+                    playButtonIcon.classList.add('fa-play');
+                }
+            }
+
+            videoOverlay.addEventListener('click', () => {
+                if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
+                    playButtonIcon.classList.remove('fa-pause');
+                    playButtonIcon.classList.add('fa-play');
+                } else {
+                    player.playVideo();
+                    playButtonIcon.classList.remove('fa-play');
+                    playButtonIcon.classList.add('fa-pause');
+                }
+            });
 
             // Event listener for the "Download APK" button inside the modal
             startApkDownloadBtn.addEventListener('click', () => {
