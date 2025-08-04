@@ -548,6 +548,7 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
             display: flex;
+            flex-direction: column; /* Stack icon and text */
             justify-content: center;
             align-items: center;
             cursor: pointer;
@@ -564,6 +565,13 @@
             color: var(--white);
             opacity: 0.9;
             transition: opacity 0.3s ease;
+        }
+        .video-overlay .sound-prompt {
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
 
         .video-overlay:hover .play-button {
@@ -1374,9 +1382,12 @@
                 
                 <!-- Embedded Video -->
                 <div class="video-container reveal">
+                    <!-- Updated YouTube embed URL for autoplay and no controls, with JS API enabled -->
                     <iframe id="youtube-video" src="https://www.youtube.com/embed/Ve1TdpvT798?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&enablejsapi=1" title="TeenX Campaign Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <!-- Video Overlay for Play/Pause and Sound Control -->
                     <div class="video-overlay">
                         <i class="fas fa-play play-button"></i>
+                        <p class="sound-prompt">Tap to turn on sound</p>
                     </div>
                 </div>
 
@@ -1530,6 +1541,7 @@
                 <p>Developed by NeuraSoft | Contact: <a href="mailto:neurasoftware@gmail.com">neurasoftware@gmail.com</a></p>
                 <p>UI and Web Architecture R&D by <b>Team Aspiring</b></p>
                 <p>© 2025 TeenX Bangladesh. All Rights Reserved.</p>
+                <small>last updated: 01:29:46 [HH:MM:SS]<br> 08/05/2025 [MM/DD/YYYY]</small>
             </div>
         </div>
     </footer>
@@ -1956,6 +1968,7 @@
             const youtubeVideoIframe = document.getElementById('youtube-video');
             const videoOverlay = document.querySelector('.video-overlay');
             const playButtonIcon = document.querySelector('.video-overlay .play-button');
+            const soundPromptText = document.querySelector('.video-overlay .sound-prompt');
             let player; // YouTube Player API object
 
             // Load YouTube IFrame API asynchronously
@@ -1974,39 +1987,46 @@
             }
 
             function onPlayerReady(event) {
-                // Mute and autoplay on ready, then pause and show overlay
-                event.target.mute();
+                event.target.mute(); // Mute by default for autoplay compliance
                 event.target.playVideo();
-                // A small delay to ensure autoplay starts before pausing
-                setTimeout(() => {
-                    event.target.pauseVideo();
-                    videoOverlay.style.display = 'flex'; // Show overlay
-                }, 500); 
+                // Show overlay and sound prompt initially
+                videoOverlay.style.display = 'flex';
+                playButtonIcon.classList.remove('fa-pause');
+                playButtonIcon.classList.add('fa-play');
+                soundPromptText.textContent = 'Tap to turn on sound';
             }
 
             function onPlayerStateChange(event) {
                 if (event.data == YT.PlayerState.PLAYING) {
-                    videoOverlay.style.display = 'none'; // Hide overlay when playing
-                    playButtonIcon.classList.remove('fa-pause');
-                    playButtonIcon.classList.add('fa-play');
+                    if (!player.isMuted()) { // Only hide overlay if sound is on
+                        videoOverlay.style.display = 'none';
+                    }
+                    playButtonIcon.classList.remove('fa-play');
+                    playButtonIcon.classList.add('fa-pause');
+                    soundPromptText.textContent = ''; // Clear sound prompt
                 } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
                     videoOverlay.style.display = 'flex'; // Show overlay when paused or ended
                     playButtonIcon.classList.remove('fa-pause');
                     playButtonIcon.classList.add('fa-play');
+                    if (player.isMuted()) {
+                        soundPromptText.textContent = 'Tap to turn on sound';
+                    } else {
+                        soundPromptText.textContent = 'Tap to play';
+                    }
                 }
             }
 
             videoOverlay.addEventListener('click', () => {
-                if (player.getPlayerState() == YT.PlayerState.PLAYING) {
+                if (player.isMuted()) {
+                    player.unMute();
+                    videoOverlay.style.display = 'none'; // Hide overlay immediately after unmute
+                } else if (player.getPlayerState() == YT.PlayerState.PLAYING) {
                     player.pauseVideo();
-                    playButtonIcon.classList.remove('fa-pause');
-                    playButtonIcon.classList.add('fa-play');
                 } else {
                     player.playVideo();
-                    playButtonIcon.classList.remove('fa-play');
-                    playButtonIcon.classList.add('fa-pause');
                 }
             });
+
 
             // Event listener for the "Download APK" button inside the modal
             startApkDownloadBtn.addEventListener('click', () => {
