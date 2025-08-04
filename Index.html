@@ -161,8 +161,9 @@
 
         #header .container {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between; /* Distribute items with space between */
+            gap: 1rem; /* Add a small gap between elements */
         }
 
         .logo {
@@ -173,6 +174,8 @@
             align-items: center;
             gap: 0.5rem; /* Space between text and image if both present */
             height: 2.5rem; /* Give the logo container a fixed height for consistent rectangular appearance */
+            flex-shrink: 0; /* Prevent the logo from shrinking */
+            flex-grow: 0; /* Prevent the logo from growing */
         }
 
         .logo img {
@@ -182,36 +185,24 @@
             object-fit: contain; /* Ensure the entire image fits within the bounds */
         }
 
-        #header nav ul {
-            list-style: none;
-            display: flex;
-            gap: 2rem;
+        #header nav {
+            display: flex; /* Ensure nav is a flex container for its items */
+            align-items: center;
+            gap: 2rem; /* Existing gap for nav items */
+            margin: 0 auto; /* Center the nav between logo and download button */
+            flex-grow: 1; /* Allow nav to take up available space for centering */
+            justify-content: center; /* Center nav items within nav */
+        }
+        
+        #header nav ul { /* Specific styling for the ul inside nav */
+            list-style: none; /* Remove bullet points */
+            display: flex; /* Make list items horizontal */
+            gap: 2rem; /* Space between list items */
         }
 
-        #header nav a {
-            color: var(--text-gray);
-            font-weight: 500;
-            transition: color 0.3s ease, transform 0.3s ease;
-            position: relative;
-        }
-
-        #header nav a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--primary-blue);
-            transition: width 0.3s ease;
-        }
-
-        #header nav a:hover::after {
-            width: 100%;
-        }
-
-        #header nav a:hover {
-            color: var(--primary-blue);
+        #download-btn-header { 
+            flex-shrink: 0; /* Prevent the button from shrinking */
+            flex-grow: 0; /* Prevent the button from growing */
         }
 
         /* Mobile Menu */
@@ -221,7 +212,7 @@
             width: 30px;
             height: 25px;
             position: relative;
-            z-index: 1100;
+            z-index: 1100; /* Ensure it's above the mobile-nav overlay */
         }
 
         .hamburger span {
@@ -229,12 +220,16 @@
             position: absolute;
             height: 3px;
             width: 100%;
-            background: var(--black);
+            background: var(--black); /* Ensure color is visible */
             border-radius: 9px;
             opacity: 1;
             left: 0;
             transform: rotate(0deg);
             transition: .25s ease-in-out;
+        }
+
+        .hamburger.open span {
+            background: var(--black); /* Ensure X color is visible */
         }
 
         .hamburger span:nth-child(1) { top: 0px; }
@@ -268,12 +263,39 @@
             pointer-events: auto;
         }
 
+        .mobile-nav-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--white); /* Match header background */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Match header shadow */
+            z-index: 1060; /* Ensure it's above mobile-nav content but below hamburger */
+        }
+
+        .close-mobile-nav-button {
+            font-size: 2.5rem; /* Larger for better tap target */
+            color: var(--black); /* Clear color */
+            cursor: pointer;
+            line-height: 1; /* Prevent extra spacing */
+            padding: 0.5rem; /* Make it easier to tap */
+            background: none;
+            border: none;
+            font-weight: bold;
+            z-index: 1100; /* Ensure it's on top */
+        }
+
         .mobile-nav ul {
             list-style: none;
             text-align: center;
             display: flex;
             flex-direction: column;
             gap: 2rem;
+            padding-top: 6rem; /* Push content down to clear the mobile-nav-header */
         }
 
         .mobile-nav a {
@@ -549,21 +571,29 @@
             animation-play-state: paused;
         }
 
-        .campaign-carousel-wrapper img, .skeleton-loader {
-            width: 100%; /* Allows image to take full width of its flex item */
-            max-width: 300px; /* Caps the maximum width of the image */
-            min-width: clamp(150px, 40vw, 300px); /* Ensures a minimum readable size on smaller screens */
-            height: 150px;
-            object-fit: cover;
-            flex-shrink: 1; /* Allows the item to shrink if needed */
-            flex-grow: 0; /* Prevents the item from growing beyond its flex-basis */
+        /* New wrapper for individual carousel items to control their size */
+        .carousel-item-wrapper {
+            flex-shrink: 0;
+            flex-grow: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-radius: 0.75rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
-            /* Responsive flex-basis for campaign images */
-            flex-basis: calc(33.33% - 1rem); /* Default: 3 items per row on large screens */
+            background-color: var(--white); /* Ensure background for images */
         }
-        .campaign-carousel-wrapper img:hover {
+        .campaign-carousel-wrapper .carousel-item-wrapper {
+            width: 300px; /* Fixed width for the container */
+            height: 150px; /* Fixed height for the container */
+        }
+        .campaign-carousel-wrapper .carousel-item-wrapper img {
+            height: 100%; /* Fill the wrapper height */
+            width: 100%; /* Fill the wrapper width */
+            object-fit: cover; /* Use cover for campaign images as they are larger and can fill space */
+            border-radius: 0.75rem;
+        }
+        .campaign-carousel-wrapper .carousel-item-wrapper:hover {
             transform: scale(1.05);
         }
         
@@ -872,23 +902,31 @@
             animation-play-state: paused;
         }
 
-        .projects-carousel img, .projects-skeleton-loader {
-            height: 60px; /* Fixed height for consistent sizing */
-            width: auto; /* Allow width to scale proportionally */
-            max-width: 100%; /* Ensure it doesn't overflow its container */
-            min-width: 70px; /* Minimum width to prevent images from becoming too small */
-            object-fit: contain; /* Ensures the entire image is visible within its bounds */
-            filter: grayscale(80%);
-            opacity: 0.7;
+        .projects-carousel .carousel-item-wrapper {
+            height: 60px; /* Fixed height for the container */
+            width: 120px; /* Fixed width for the container, ensuring rectangular shape */
+            flex-shrink: 0; /* Prevent shrinking too much */
+            flex-grow: 0; /* Prevent growing too much */
+            display: flex; /* Use flex to center image inside */
+            justify-content: center;
+            align-items: center;
             border-radius: 0.5rem;
-            background-color: #2e3a47;
-            padding: 0.5rem;
-            transition: filter 0.3s ease, opacity 0.3s ease;
-            /* Responsive flex-basis for partner logos */
-            flex-basis: calc(20% - 1.2rem); /* Default: 5 items per row on large screens (adjust for gap) */
+            background-color: #2e3a47; /* Background for the wrapper */
+            padding: 0.5rem; /* Padding inside the wrapper */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
 
-        .projects-carousel img:hover {
+        .projects-carousel .carousel-item-wrapper img {
+            height: 100%; /* Fill the wrapper height */
+            width: 100%; /* Fill the wrapper width */
+            object-fit: contain; /* Contain image within the fixed size */
+            filter: grayscale(80%);
+            opacity: 0.7;
+            border-radius: 0.25rem; /* Slightly smaller border-radius for image inside */
+        }
+
+        .projects-carousel .carousel-item-wrapper:hover {
             filter: grayscale(0%);
             opacity: 1;
         }
@@ -1068,6 +1106,16 @@
             .hero-image-frames .phone-frame.single-frame {
                 display: none;
             }
+            /* Ensure desktop nav and button are visible */
+            #header nav {
+                display: flex;
+            }
+            #download-btn-header {
+                display: block;
+            }
+            .hamburger {
+                display: none;
+            }
         }
 
         /* Tablet and smaller desktop (max-width: 1024px) */
@@ -1075,6 +1123,18 @@
             #header nav {
                 display: none; /* Hide desktop navigation */
             }
+            /* Revert header container to space-between for mobile */
+            #header .container {
+                justify-content: space-between; 
+                gap: 0; /* Remove gap on mobile header */
+            }
+            #header nav + .cta-button {
+                margin-left: 0; /* Reset margin for mobile */
+            }
+            #download-btn-header { /* Hide desktop download button on mobile */
+                display: none;
+            }
+
             .hamburger {
                 display: block; /* Show hamburger menu */
             }
@@ -1120,6 +1180,11 @@
             .activity-card {
                 flex-basis: 45%; /* Two cards per row on tablets */
             }
+            /* Adjust flex-basis for partner logos on tablet */
+            .projects-carousel .carousel-item-wrapper {
+                width: 100px; /* Adjusted width for tablet */
+                height: 50px; /* Adjusted height for tablet */
+            }
         }
         
         /* Mobile specific styles (max-width: 768px) */
@@ -1146,8 +1211,10 @@
             .projects-carousel-container {
                 margin-top: 2rem;
             }
-            .projects-carousel img {
-                height: 50px; /* Slightly smaller partner logos on mobile */
+            /* Adjust flex-basis for partner logos on mobile */
+            .projects-carousel .carousel-item-wrapper {
+                width: 80px; /* Adjusted width for mobile */
+                height: 40px; /* Adjusted height for mobile */
             }
             #cta-final .cta-buttons {
                 flex-direction: column; /* Stack CTA buttons vertically */
@@ -1160,6 +1227,18 @@
             .close-button {
                 top: 0.5rem;
                 right: 1rem;
+            }
+        }
+
+        /* Very small mobile devices (max-width: 480px) */
+        @media (max-width: 480px) {
+            .projects-carousel .carousel-item-wrapper {
+                width: 60px; /* Adjusted width for very small mobile */
+                height: 30px; /* Adjusted height for very small mobile */
+            }
+            .campaign-carousel-wrapper .carousel-item-wrapper {
+                width: 100%; /* Full width on very small mobile */
+                height: 100px; /* Adjust height for very small mobile */
             }
         }
     </style>
@@ -1182,7 +1261,7 @@
                 <!-- Updated logo image source to your provided one and added alt text -->
                 <img src="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD" alt="TeenX Logo">
             </a>
-            <!-- Desktop Navigation -->
+            <!-- Desktop Navigation and Download Button Group -->
             <nav>
                 <ul>
                     <li><a href="#activities">Activities</a></li>
@@ -1203,6 +1282,13 @@
 
     <!-- Mobile Navigation Menu -->
     <nav id="mobile-nav" class="mobile-nav">
+        <!-- Header for mobile nav with logo and close button -->
+        <div class="mobile-nav-header">
+            <a href="#" class="logo">
+                <img src="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD" alt="TeenX Logo">
+            </a>
+            <span class="close-mobile-nav-button">&times;</span>
+        </div>
         <ul>
             <li><a href="#activities">Activities</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
@@ -1255,7 +1341,7 @@
                 
                 <!-- Embedded Video -->
                 <div class="video-container reveal">
-                    <iframe src="https://www.youtube.com/embed/Pj1Gj57xT9U" title="TeenX Campaign Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/Ve1TdpvT798" title="TeenX Campaign Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 </div>
 
                 <!-- Campaign Images Carousel -->
@@ -1502,6 +1588,7 @@
             const hamburger = document.getElementById('hamburger');
             const mobileNav = document.getElementById('mobile-nav');
             const navLinks = document.querySelectorAll('#mobile-nav a');
+            const closeMobileNavButton = document.querySelector('.close-mobile-nav-button'); // Get the new close button
             
             // Function to toggle mobile navigation
             function toggleMobileNav() {
@@ -1513,6 +1600,13 @@
             hamburger.addEventListener('click', () => {
                 toggleMobileNav();
             });
+
+            // Event listener for the new explicit close button
+            if (closeMobileNavButton) {
+                closeMobileNavButton.addEventListener('click', () => {
+                    toggleMobileNav();
+                });
+            }
 
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
@@ -1725,13 +1819,15 @@
              *
              * @param {string} containerId - The ID of the container element to populate.
              * @param {string} wrapperClass - The class for the carousel wrapper.
+             * @param {string} itemWrapperClass - The class for the new div wrapper around each image.
              * @param {string} imageClass - The class for the images.
              * @param {string} skeletonClass - The class for the skeleton loader.
              * @param {string} basePath - The base path to the image directory.
              * @param {string} prefix - The file name prefix (e.g., 'c' for campaign images).
              * @param {number} count - The number of images to check for.
+             * @param {string} fallbackImageUrl - URL for a placeholder image if actual image is not found.
              */
-            function loadDynamicCarousel(containerId, wrapperClass, imageClass, skeletonClass, basePath, prefix, count) {
+            function loadDynamicCarousel(containerId, wrapperClass, itemWrapperClass, imageClass, skeletonClass, basePath, prefix, count, fallbackImageUrl) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
 
@@ -1745,21 +1841,22 @@
                     return new Promise(resolve => {
                         const img = new Image();
                         img.src = src;
-                        img.onload = () => resolve(`<img src="${src}" alt="${prefix}" class="${imageClass}">`);
-                        img.onerror = () => resolve('');
+                        img.onload = () => resolve(`<div class="${itemWrapperClass}"><img src="${src}" alt="${prefix}" class="${imageClass}"></div>`);
+                        img.onerror = () => {
+                            // Use fallback image if provided, otherwise an empty string
+                            resolve(fallbackImageUrl ? `<div class="${itemWrapperClass}"><img src="${fallbackImageUrl}" alt="Placeholder" class="${imageClass}"></div>` : '');
+                        };
                     });
                 });
 
                 Promise.all(allPromises).then(results => {
                     const validImages = results.filter(html => html !== '');
                     if (validImages.length === 0) {
-                        // If no images found, display skeleton loaders and stop animation
                         carouselWrapper.innerHTML = `<div class="${skeletonClass}"></div>`.repeat(count);
                         carouselWrapper.style.animation = 'none';
                         return;
                     }
 
-                    // Duplicate the images for infinite loop effect
                     carouselWrapper.innerHTML = (validImages.join('') + validImages.join(''));
                 });
             }
@@ -1768,22 +1865,26 @@
             loadDynamicCarousel(
                 'campaign-carousel-content',
                 'campaign-carousel-wrapper',
+                'carousel-item-wrapper', /* New wrapper class for individual items */
                 'campaign-img',
                 'skeleton-loader',
                 'Assets/Img',
                 'c',
-                6
+                6,
+                'https://placehold.co/300x150/e0e0e0/555555?text=Campaign' // Fallback for campaign images
             );
 
             // Load Partners Carousel
             loadDynamicCarousel(
                 'partners-carousel-content',
                 'projects-carousel-wrapper',
+                'carousel-item-wrapper', /* New wrapper class for individual items */
                 'projects-carousel-img',
                 'projects-skeleton-loader',
                 'Assets/partner',
                 'p',
-                6
+                6,
+                'https://placehold.co/120x60/2e3a47/FFFFFF?text=Partner' // Fallback for partner images
             );
             
             // Testimonial Carousel Logic
