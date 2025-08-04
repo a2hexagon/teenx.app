@@ -536,8 +536,12 @@
         }
 
         .campaign-carousel-wrapper img, .skeleton-loader {
-            min-width: 300px;
-            max-width: 300px;
+            /* Removed fixed min-width and max-width to allow responsiveness */
+            width: 100%; /* Allows image to take full width of its flex item */
+            max-width: 300px; /* Caps the maximum width of the image */
+            flex-basis: 300px; /* Ideal width for the flex item */
+            flex-shrink: 1; /* Allows the item to shrink if needed */
+            flex-grow: 0; /* Prevents the item from growing beyond its flex-basis */
             height: 150px;
             object-fit: cover;
             border-radius: 0.75rem;
@@ -861,9 +865,12 @@
         }
 
         .projects-carousel img, .projects-skeleton-loader {
-            height: 60px; /* Fixed height as per original, combined with object-fit */
-            width: auto; /* Allow width to adjust based on aspect ratio */
-            max-width: 100%; /* Ensure images don't overflow their implied container */
+            height: 60px; /* Fixed height as per original design */
+            width: 100%; /* Allows image to take full width of its flex item */
+            max-width: 120px; /* Caps the maximum width of the image */
+            flex-basis: 120px; /* Ideal width for the flex item */
+            flex-shrink: 1; /* Allows the item to shrink if needed */
+            flex-grow: 0; /* Prevents the item from growing beyond its flex-basis */
             object-fit: contain; /* Ensures the entire image is visible within its bounds */
             filter: grayscale(80%);
             opacity: 0.7;
@@ -871,7 +878,6 @@
             background-color: #2e3a47;
             padding: 0.5rem;
             transition: filter 0.3s ease, opacity 0.3s ease;
-            min-width: 120px; /* Minimum width for partner logos */
         }
 
         .projects-carousel img:hover {
@@ -994,6 +1000,40 @@
             text-align: left;
             margin-bottom: 0.25rem;
             font-weight: 500;
+        }
+
+        /* Styles for the download progress bar */
+        .progress-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            background-color: var(--subtle-gray);
+            border-radius: 0.5rem;
+            height: 1.5rem;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-blue);
+            width: 0%;
+            border-radius: 0.5rem;
+            transition: width 0.3s ease-out; /* Smooth transition for progress */
+        }
+
+        #download-percentage {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .text-green-600 {
+            color: #22c55e; /* Tailwind green-600 equivalent */
+            margin-bottom: 1rem;
         }
 
         /* Animations for scroll reveal */
@@ -1361,12 +1401,26 @@
     <div id="download-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">×</span>
-            <h2>Download TeenX App</h2>
-            <p>Ready to join the community? Choose your download option below.</p>
-            <div class="modal-buttons">
-                <!-- Updated the download link as requested -->
-                <a href="Assets/App/TeenXApp.apk" download class="cta-button">Download APK (Approx. 25MB)</a>
+            <h2 id="download-modal-title">Download TeenX App</h2>
+            <p id="download-modal-message">Ready to join the community? Choose your download option below.</p>
+            
+            <div id="download-options" class="modal-buttons">
+                <button id="start-apk-download" class="cta-button">Download APK (Approx. 25MB)</button>
                 <a href="https://play.google.com/store/apps/details?id=your.app.id" target="_blank" class="cta-button secondary">Get it on Google Play</a>
+            </div>
+
+            <div id="download-progress-container" class="progress-container" style="display: none;">
+                <p>Downloading TeenX...</p>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 0%;"></div>
+                </div>
+                <p id="download-percentage">0%</p>
+            </div>
+
+            <div id="download-complete-message" style="display: none;">
+                <h3 class="text-green-600">Download Complete!</h3>
+                <p>Thank you for downloading TeenX. The download should start automatically.</p>
+                <button class="cta-button" onclick="hideModals()">Close</button>
             </div>
         </div>
     </div>
@@ -1488,6 +1542,17 @@
             const contactForm = document.querySelector('.contact-form');
             const joinForm = document.querySelector('.join-form');
 
+            // Elements for download progress
+            const startApkDownloadBtn = document.getElementById('start-apk-download');
+            const downloadOptions = document.getElementById('download-options');
+            const downloadProgressContainer = document.getElementById('download-progress-container');
+            const progressBarFill = document.querySelector('#download-progress-container .progress-bar-fill');
+            const downloadPercentage = document.getElementById('download-percentage');
+            const downloadCompleteMessage = document.getElementById('download-complete-message');
+            const downloadModalTitle = document.getElementById('download-modal-title');
+            const downloadModalMessage = document.getElementById('download-modal-message');
+
+
             function showModal(modalElement) {
                 document.body.style.overflow = 'hidden';
                 modalElement.classList.add('active');
@@ -1504,6 +1569,26 @@
                 hideModals();
                 showModal(thanksModal);
             }
+
+            // Function to reset download modal to initial state
+            function resetDownloadModal() {
+                downloadModalTitle.textContent = "Download TeenX App";
+                downloadModalMessage.textContent = "Ready to join the community? Choose your download option below.";
+                downloadOptions.style.display = 'flex'; // Show download options
+                downloadProgressContainer.style.display = 'none'; // Hide progress bar
+                downloadCompleteMessage.style.display = 'none'; // Hide complete message
+                progressBarFill.style.width = '0%'; // Reset progress bar
+                downloadPercentage.textContent = '0%'; // Reset percentage
+            }
+
+            // Override showModal for download to reset it first
+            const originalShowModal = window.showModal;
+            window.showModal = function(modalElement) {
+                if (modalElement.id === 'download-modal') {
+                    resetDownloadModal(); // Reset the download modal before showing
+                }
+                originalShowModal(modalElement);
+            };
 
             downloadButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
@@ -1665,6 +1750,41 @@
                     showTestimonial(currentTestimonial);
                 }, 5000);
             }
+
+            // Event listener for the "Download APK" button inside the modal
+            startApkDownloadBtn.addEventListener('click', () => {
+                downloadOptions.style.display = 'none'; // Hide download options
+                downloadProgressContainer.style.display = 'block'; // Show progress bar
+                downloadModalTitle.textContent = "Downloading...";
+                downloadModalMessage.textContent = "Please wait while your download is prepared.";
+
+                let progress = 0;
+                // Simulate download progress
+                const interval = setInterval(() => {
+                    progress += Math.floor(Math.random() * 15) + 5; // Simulate varying progress speed
+                    if (progress > 100) {
+                        progress = 100;
+                    }
+                    progressBarFill.style.width = `${progress}%`;
+                    downloadPercentage.textContent = `${progress}%`;
+
+                    if (progress === 100) {
+                        clearInterval(interval); // Stop the progress simulation
+                        downloadProgressContainer.style.display = 'none'; // Hide progress bar
+                        downloadCompleteMessage.style.display = 'block'; // Show complete message
+                        downloadModalTitle.textContent = "Download Started!";
+                        downloadModalMessage.textContent = ""; // Clear message
+
+                        // Trigger the actual file download
+                        const downloadLink = document.createElement('a');
+                        downloadLink.href = 'Assets/App/TeenXApp.apk';
+                        downloadLink.download = 'TeenXApp.apk'; // Suggests filename for the download
+                        document.body.appendChild(downloadLink); // Temporarily add to DOM
+                        downloadLink.click(); // Programmatically click the link to start download
+                        document.body.removeChild(downloadLink); // Remove the temporary link
+                    }
+                }, 300); // Update progress every 300ms
+            });
         });
     </script>
 </body>
