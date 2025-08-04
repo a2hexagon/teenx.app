@@ -903,8 +903,8 @@
         }
 
         .projects-carousel .carousel-item-wrapper {
-            height: 60px; /* Fixed height for the container */
-            width: 120px; /* Fixed width for the container, ensuring rectangular shape */
+            height: 10px !important; /* Fixed height for the container */
+            width: 20px !important; /* Fixed width for the container, ensuring rectangular shape */
             flex-shrink: 0; /* Prevent shrinking too much */
             flex-grow: 0; /* Prevent growing too much */
             display: flex; /* Use flex to center image inside */
@@ -1131,8 +1131,9 @@
             #header nav + .cta-button {
                 margin-left: 0; /* Reset margin for mobile */
             }
-            #download-btn-header { /* Hide desktop download button on mobile */
-                display: none;
+            /* Show the download button on mobile header */
+            #download-btn-header { 
+                display: block;
             }
 
             .hamburger {
