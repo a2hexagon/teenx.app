@@ -169,6 +169,17 @@
             font-size: 1.7rem;
             font-weight: 700;
             color: var(--primary-blue);
+            display: flex; /* Ensure flex for image alignment */
+            align-items: center;
+            gap: 0.5rem; /* Space between text and image if both present */
+            height: 2.5rem; /* Give the logo container a fixed height for consistent rectangular appearance */
+        }
+
+        .logo img {
+            height: 100%; /* Fill the height of the .logo container */
+            width: auto; /* Maintain aspect ratio */
+            max-width: 100%; /* Ensure it doesn't overflow its container */
+            object-fit: contain; /* Ensure the entire image fits within the bounds */
         }
 
         #header nav ul {
@@ -397,7 +408,8 @@
             border-radius: 40px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Changed to column to stack image and button */
+            justify-content: flex-start; /* Align content to start */
             align-items: center;
             overflow: hidden;
             transition: all 0.5s ease-in-out;
@@ -426,18 +438,19 @@
         }
 
         .hero-image-frames .mockup-img {
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: relative; /* Changed to relative */
+            top: auto; /* Reset top */
+            left: auto; /* Reset left */
             border-radius: 25px;
             width: 100%;
-            height: 100%;
+            height: 100%; /* Occupy full height of the frame */
             object-fit: cover;
             box-shadow: none;
+            margin-top: 20px; /* Space for the notch */
         }
         
         .hero-image-frames .download-btn-mobile-frame {
-            position: absolute;
+            position: absolute; /* Keep absolute for precise placement */
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
@@ -520,7 +533,8 @@
         }
         .campaign-carousel-wrapper {
             display: flex;
-            gap: 2.5rem;
+            /* Adjusted gap for better fitting on smaller screens */
+            gap: 1.5rem; 
             padding: 1rem 0;
             /* Crucial for infinite scroll: allows content to extend beyond viewport */
             white-space: nowrap; 
@@ -536,17 +550,18 @@
         }
 
         .campaign-carousel-wrapper img, .skeleton-loader {
-            /* Removed fixed min-width and max-width to allow responsiveness */
             width: 100%; /* Allows image to take full width of its flex item */
             max-width: 300px; /* Caps the maximum width of the image */
-            flex-basis: 300px; /* Ideal width for the flex item */
-            flex-shrink: 1; /* Allows the item to shrink if needed */
-            flex-grow: 0; /* Prevents the item from growing beyond its flex-basis */
+            min-width: clamp(150px, 40vw, 300px); /* Ensures a minimum readable size on smaller screens */
             height: 150px;
             object-fit: cover;
+            flex-shrink: 1; /* Allows the item to shrink if needed */
+            flex-grow: 0; /* Prevents the item from growing beyond its flex-basis */
             border-radius: 0.75rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            /* Responsive flex-basis for campaign images */
+            flex-basis: calc(33.33% - 1rem); /* Default: 3 items per row on large screens */
         }
         .campaign-carousel-wrapper img:hover {
             transform: scale(1.05);
@@ -790,12 +805,6 @@
             margin-bottom: 1rem;
         }
 
-        .footer-info p {
-            max-width: 300px;
-            margin-bottom: 1.5rem;
-            color: #d1d5db;
-        }
-
         .footer-info .social-icons {
             margin-top: 1rem;
         }
@@ -850,10 +859,9 @@
         
         .projects-carousel-wrapper {
             display: flex;
-            gap: 2.5rem;
-            /* Crucial for infinite scroll */
+            /* Adjusted gap for better fitting on smaller screens */
+            gap: 1.5rem; 
             white-space: nowrap; 
-            /* Ensures the wrapper takes the full width of its content */
             width: fit-content; 
             animation: slide 30s linear infinite;
         }
@@ -865,12 +873,10 @@
         }
 
         .projects-carousel img, .projects-skeleton-loader {
-            height: 60px; /* Fixed height as per original design */
-            width: 100%; /* Allows image to take full width of its flex item */
-            max-width: 120px; /* Caps the maximum width of the image */
-            flex-basis: 120px; /* Ideal width for the flex item */
-            flex-shrink: 1; /* Allows the item to shrink if needed */
-            flex-grow: 0; /* Prevents the item from growing beyond its flex-basis */
+            height: 60px; /* Fixed height for consistent sizing */
+            width: auto; /* Allow width to scale proportionally */
+            max-width: 100%; /* Ensure it doesn't overflow its container */
+            min-width: 70px; /* Minimum width to prevent images from becoming too small */
             object-fit: contain; /* Ensures the entire image is visible within its bounds */
             filter: grayscale(80%);
             opacity: 0.7;
@@ -878,6 +884,8 @@
             background-color: #2e3a47;
             padding: 0.5rem;
             transition: filter 0.3s ease, opacity 0.3s ease;
+            /* Responsive flex-basis for partner logos */
+            flex-basis: calc(20% - 1.2rem); /* Default: 5 items per row on large screens (adjust for gap) */
         }
 
         .projects-carousel img:hover {
@@ -1170,7 +1178,10 @@
 
     <header id="header">
         <div class="container">
-            <a href="#" class="logo">TeenX</a>
+            <a href="#" class="logo">
+                <!-- Updated logo image source to your provided one and added alt text -->
+                <img src="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD" alt="TeenX Logo">
+            </a>
             <!-- Desktop Navigation -->
             <nav>
                 <ul>
@@ -1218,7 +1229,8 @@
                         <!-- Single frame for mobile (shown by default, hidden on desktop via media query) -->
                         <div class="phone-frame single-frame">
                             <img src="Assets/Ui/ui-2.png" alt="App UI" class="mockup-img">
-                            <a href="Assets/App/TeenXApp.apk" download class="cta-button download-btn-mobile-frame">Download TeenX</a>
+                            <!-- Download button inside the mobile frame, now correctly positioned -->
+                            <button id="download-btn-hero-mobile-frame" class="cta-button download-btn-mobile-frame">Download TeenX</button>
                         </div>
                         
                         <!-- Three frames for desktop (hidden by default, shown on desktop via media query) -->
@@ -1354,7 +1366,10 @@
     <footer>
         <div class="container">
             <div class="footer-info">
-                <a href="#" class="logo">TeenX</a>
+                <a href="#" class="logo">
+                    <!-- Updated logo image source to your provided one and added alt text -->
+                    <img src="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD" alt="TeenX Logo">
+                </a>
                 <p>Building a supportive and enriching online space for teenagers in Bangladesh.</p>
                 <!-- Social media icons section -->
                 <div class="social-icons">
@@ -1488,18 +1503,30 @@
             const mobileNav = document.getElementById('mobile-nav');
             const navLinks = document.querySelectorAll('#mobile-nav a');
             
-            hamburger.addEventListener('click', () => {
+            // Function to toggle mobile navigation
+            function toggleMobileNav() {
                 hamburger.classList.toggle('open');
                 mobileNav.classList.toggle('open');
                 document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+            }
+
+            hamburger.addEventListener('click', () => {
+                toggleMobileNav();
             });
 
             navLinks.forEach(link => {
                 link.addEventListener('click', () => {
-                    hamburger.classList.remove('open');
-                    mobileNav.classList.remove('open');
-                    document.body.style.overflow = '';
+                    toggleMobileNav(); // Close nav when a link is clicked
                 });
+            });
+
+            // New: Close mobile nav when clicking on the overlay itself
+            mobileNav.addEventListener('click', (event) => {
+                // Check if the click occurred directly on the mobileNav (the overlay background)
+                // and not on its children (the ul/buttons)
+                if (event.target === mobileNav) {
+                    toggleMobileNav();
+                }
             });
             
             // Scroll Reveal Animation Logic
@@ -1525,6 +1552,13 @@
                         sections[currentIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
                         currentIndex++;
                         setTimeout(scrollToNextSection, 1500); 
+                    }
+                    // Reset to top after last section
+                    if (currentIndex === sections.length) {
+                        setTimeout(() => {
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            currentIndex = 0; // Reset index for next tour
+                        }, 1500);
                     }
                 }
 
@@ -1590,22 +1624,51 @@
                 originalShowModal(modalElement);
             };
 
+            // Event listeners for all download buttons to show the modal and trigger progress
             downloadButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
                     hideModals();
-                    hamburger.classList.remove('open');
-                    mobileNav.classList.remove('open');
+                    // Close mobile nav if it's open before showing modal
+                    if (mobileNav.classList.contains('open')) {
+                        toggleMobileNav(); 
+                    }
                     showModal(downloadModal);
+                    // Automatically trigger the APK download process after modal is shown
+                    setTimeout(() => {
+                        startApkDownloadBtn.click(); // Programmatically click the internal download button
+                    }, 100); // Small delay to ensure modal is rendered
                 });
             });
+
+            // Add event listener for the new download button inside the mobile frame
+            const downloadBtnHeroMobileFrame = document.getElementById('download-btn-hero-mobile-frame');
+            if (downloadBtnHeroMobileFrame) {
+                downloadBtnHeroMobileFrame.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    hideModals();
+                    // Close mobile nav if it's open before showing modal
+                    if (mobileNav.classList.contains('open')) {
+                        toggleMobileNav(); 
+                    }
+                    showModal(downloadModal);
+                    setTimeout(() => {
+                        startApkDownloadBtn.click();
+                    }, 100);
+                });
+            }
             
             joinButtons.forEach(button => {
                 button.addEventListener('click', (event) => {
                     event.preventDefault();
                     hideModals();
+                    // Close mobile nav if it's open before showing modal
+                    if (mobileNav.classList.contains('open')) {
+                        toggleMobileNav(); 
+                    }
                     hamburger.classList.remove('open');
                     mobileNav.classList.remove('open');
+                    document.body.style.overflow = ''; // Ensure scroll is re-enabled
                     showModal(joinModal);
                 });
             });
