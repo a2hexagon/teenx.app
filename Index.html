@@ -376,23 +376,23 @@
             align-items: center;
             animation: fadeInLeft 1s ease-in-out;
             position: relative;
-            height: 500px;
+            height: 500px; /* Adjusted for better spacing on desktop */
         }
         
-        .hero-image-mobile {
+        /* New Responsive Hero Image Frames */
+        .hero-image-frames {
             position: relative;
-            width: 300px;
-            height: 600px;
-            margin: 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-        
-        .hero-image-mobile .phone-frame {
-            position: relative;
             width: 100%;
             height: 100%;
+        }
+
+        .hero-image-frames .phone-frame {
+            position: absolute;
+            width: 300px;
+            height: 600px;
             border: 10px solid var(--black);
             border-radius: 40px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
@@ -400,8 +400,12 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            transition: all 0.5s ease-in-out;
+            /* Hidden by default, will be shown by media queries */
+            display: none; 
         }
-        .hero-image-mobile .phone-frame::before {
+
+        .hero-image-frames .phone-frame::before {
             content: '';
             position: absolute;
             top: 0;
@@ -411,7 +415,7 @@
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
         }
-        .hero-image-mobile .phone-frame::after {
+        .hero-image-frames .phone-frame::after {
             content: '';
             position: absolute;
             bottom: -5px;
@@ -420,7 +424,8 @@
             background-color: var(--black);
             border-radius: 5px;
         }
-        .hero-image-mobile .mockup-img {
+
+        .hero-image-frames .mockup-img {
             position: absolute;
             top: 0;
             left: 0;
@@ -430,7 +435,8 @@
             object-fit: cover;
             box-shadow: none;
         }
-        .hero-image-mobile .download-btn-mobile-frame {
+        
+        .hero-image-frames .download-btn-mobile-frame {
             position: absolute;
             bottom: 2rem;
             left: 50%;
@@ -441,78 +447,26 @@
             z-index: 10;
         }
 
-
-        .hero-image-desktop {
-            display: none;
-        }
-        
-        .hero-image-multi-frames {
-            position: relative; /* Set to relative to contain images */
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: visible;
-        }
-        
-        .hero-image-multi-frames img {
-            position: absolute;
-            border-radius: 10px;
-            object-fit: cover;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: all 0.5s ease-in-out;
-            border: 2px solid var(--white);
-        }
-        
-        .hero-image-multi-frames .laptop-frame-wrapper {
-            position: relative;
-            width: 90%;
-            max-width: 900px;
-            height: auto;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            background-color: #f0f0f0;
-            border: 10px solid var(--black);
-            border-radius: 20px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-        .hero-image-multi-frames .laptop-frame-wrapper::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 20px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            z-index: -1;
-        }
-
-        .hero-image-multi-frames .left-image {
-            width: 250px;
-            height: 450px;
+        /* Specific styles for the three frames on desktop */
+        .hero-image-frames .left-frame {
             z-index: 2;
-            transform: translateX(-150px) translateY(50px) scale(0.9);
+            transform: translateX(-150px) translateY(50px) scale(0.85);
             opacity: 0.8;
+            pointer-events: none; /* Allows clicks to pass through to elements behind */
         }
         
-        .hero-image-multi-frames .center-image {
-            width: 300px;
-            height: 500px;
+        .hero-image-frames .center-frame {
             z-index: 3;
             transform: translateY(-20px) scale(1);
         }
         
-        .hero-image-multi-frames .right-image {
-            width: 250px;
-            height: 450px;
+        .hero-image-frames .right-frame {
             z-index: 2;
-            transform: translateX(150px) translateY(50px) scale(0.9);
+            transform: translateX(150px) translateY(50px) scale(0.85);
             opacity: 0.8;
+            pointer-events: none; /* Allows clicks to pass through to elements behind */
         }
-
+        
         @keyframes fadeInRight {
             from { opacity: 0; transform: translateX(-50px); }
             to { opacity: 1; transform: translateX(0); }
@@ -555,6 +509,9 @@
             margin: 0 auto 4rem;
             overflow: hidden;
             max-width: 1200px;
+            position: relative;
+            /* Adds a fading effect at the edges for infinite scroll illusion */
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
         .campaign-carousel-container h3 {
             text-align: center;
@@ -565,11 +522,11 @@
             display: flex;
             gap: 2.5rem;
             padding: 1rem 0;
+            /* Crucial for infinite scroll: allows content to extend beyond viewport */
+            white-space: nowrap; 
+            /* Ensures the wrapper takes the full width of its content */
+            width: fit-content; 
             animation: slide-campaigns 25s linear infinite;
-        }
-        .campaign-carousel-wrapper.no-animation {
-            animation: none;
-            justify-content: center;
         }
         .campaign-carousel-wrapper.paused {
             animation-play-state: paused;
@@ -597,9 +554,11 @@
             background-size: 200% 100%;
             animation: loading 1.5s infinite;
         }
+        /* Animation for infinite horizontal slide */
         @keyframes slide-campaigns {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            /* Translate by 50% of the wrapper's width (which is 2x original content) */
+            100% { transform: translateX(-50%); } 
         }
         @keyframes loading {
             0% { background-position: 200% 0; }
@@ -625,7 +584,7 @@
             opacity: 0;
             transform: translateY(20px);
             flex-grow: 1;
-            flex-basis: 250px;
+            flex-basis: 250px; /* Minimum width for cards before wrapping */
         }
 
         .activity-card:hover {
@@ -875,6 +834,9 @@
             margin-top: 3rem;
             margin-bottom: 1rem;
             overflow: hidden;
+            position: relative;
+            /* Adds a fading effect at the edges for infinite scroll illusion */
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
         .projects-carousel-container h3 {
@@ -884,9 +846,12 @@
         
         .projects-carousel-wrapper {
             display: flex;
-            white-space: nowrap;
-            animation: slide 30s linear infinite;
             gap: 2.5rem;
+            /* Crucial for infinite scroll */
+            white-space: nowrap; 
+            /* Ensures the wrapper takes the full width of its content */
+            width: fit-content; 
+            animation: slide 30s linear infinite;
         }
         .projects-carousel-wrapper.paused {
             animation-play-state: paused;
@@ -896,16 +861,17 @@
         }
 
         .projects-carousel img, .projects-skeleton-loader {
-            height: 60px;
-            width: auto;
-            object-fit: contain;
+            height: 60px; /* Fixed height as per original, combined with object-fit */
+            width: auto; /* Allow width to adjust based on aspect ratio */
+            max-width: 100%; /* Ensure images don't overflow their implied container */
+            object-fit: contain; /* Ensures the entire image is visible within its bounds */
             filter: grayscale(80%);
             opacity: 0.7;
             border-radius: 0.5rem;
             background-color: #2e3a47;
             padding: 0.5rem;
             transition: filter 0.3s ease, opacity 0.3s ease;
-            min-width: 120px;
+            min-width: 120px; /* Minimum width for partner logos */
         }
 
         .projects-carousel img:hover {
@@ -918,15 +884,12 @@
             background-size: 200% 100%;
             animation: loading 1.5s infinite;
         }
-        .projects-carousel-wrapper.no-animation {
-            animation: none;
-            justify-content: center;
-        }
 
-
+        /* Animation for infinite horizontal slide */
         @keyframes slide {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            /* Translate by 50% of the wrapper's width (which is 2x original content) */
+            100% { transform: translateX(-50%); } 
         }
 
         .credits {
@@ -1044,51 +1007,41 @@
             transform: translateY(0);
         }
         
-        /* Mobile vs Desktop frames */
+        /* Media Queries for full responsiveness */
+        /* Desktop styles (min-width: 1025px) */
         @media (min-width: 1025px) {
-            .hero-image-mobile { display: none; }
-            .hero-image-desktop { display: flex; justify-content: center; align-items: center; }
-            .hero-image-desktop .laptop-frame-wrapper {
-                position: relative;
-                width: 900px;
-                height: 500px;
-                background-color: #f0f0f0;
-                border: 10px solid var(--black);
-                border-radius: 20px;
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-                overflow: hidden;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+            /* Show the three frames on desktop */
+            .hero-image-frames .phone-frame.left-frame,
+            .hero-image-frames .phone-frame.center-frame,
+            .hero-image-frames .phone-frame.right-frame {
+                display: flex; /* Show these frames */
             }
-            .hero-image-desktop .laptop-frame-wrapper::after {
-                content: '';
-                position: absolute;
-                bottom: -15px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 80%;
-                height: 20px;
-                background-color: #e0e0e0;
-                border-radius: 5px;
-                z-index: -1;
-            }
-        }
-        @media (max-width: 1024px) {
-            #header nav {
+            /* Hide the single frame on desktop */
+            .hero-image-frames .phone-frame.single-frame {
                 display: none;
             }
+        }
+
+        /* Tablet and smaller desktop (max-width: 1024px) */
+        @media (max-width: 1024px) {
+            #header nav {
+                display: none; /* Hide desktop navigation */
+            }
             .hamburger {
-                display: block;
+                display: block; /* Show hamburger menu */
             }
             .cta-button {
                 padding: 0.6rem 1.5rem;
                 font-size: 0.9rem;
             }
-            .hero-content { text-align: center; }
-            .hero-content h1 { text-align: center; }
+            .hero-content { 
+                text-align: center; 
+            }
+            .hero-content h1 { 
+                text-align: center; 
+            }
             #hero .container {
-                flex-direction: column-reverse;
+                flex-direction: column-reverse; /* Stack content below image on smaller screens */
                 text-align: center;
             }
             .hero-image {
@@ -1098,27 +1051,44 @@
             .hero-buttons {
                 justify-content: center;
             }
-            .activity-card {
-                flex-basis: 45%;
+
+            /* Hide the three frames on tablet/mobile */
+            .hero-image-frames .phone-frame.left-frame,
+            .hero-image-frames .phone-frame.center-frame,
+            .hero-image-frames .phone-frame.right-frame {
+                display: none;
             }
-            .hero-image-desktop { display: none; }
-            .hero-image-mobile { display: flex; }
+
+            /* Show the single frame on tablet/mobile */
+            .hero-image-frames .phone-frame.single-frame {
+                display: flex;
+                position: relative; /* Reset position for single display */
+                width: 300px;
+                height: 600px;
+                transform: none; /* Remove any transforms */
+                opacity: 1;
+            }
+
+            .activity-card {
+                flex-basis: 45%; /* Two cards per row on tablets */
+            }
         }
         
+        /* Mobile specific styles (max-width: 768px) */
         @media (max-width: 768px) {
             .section-padding { padding: 4rem 0; }
             h1 { font-size: clamp(2rem, 8vw, 3rem); }
             h2 { font-size: clamp(1.8rem, 6vw, 2.2rem); }
             .activity-row {
-                flex-direction: column;
+                flex-direction: column; /* Stack activity cards vertically */
                 align-items: center;
             }
             .activity-card {
-                width: 100%;
+                width: 100%; /* Full width for activity cards on mobile */
                 flex-basis: auto;
             }
             footer .container {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Stack footer columns vertically */
                 text-align: center;
             }
             .footer-info, .footer-links { text-align: center; }
@@ -1129,10 +1099,10 @@
                 margin-top: 2rem;
             }
             .projects-carousel img {
-                height: 50px;
+                height: 50px; /* Slightly smaller partner logos on mobile */
             }
             #cta-final .cta-buttons {
-                flex-direction: column;
+                flex-direction: column; /* Stack CTA buttons vertically */
                 align-items: center;
                 gap: 1rem;
             }
@@ -1203,19 +1173,23 @@
                     <button id="explore-btn">Explore</button>
                 </div>
                 <div class="hero-image">
-                    <!-- Mobile frame will be shown on smaller screens -->
-                    <div class="hero-image-mobile">
-                        <div class="phone-frame">
-                            <img src="Assets/Ui/ui-1.png" alt="App UI" class="mockup-img">
+                    <!-- New responsive hero image frames container -->
+                    <div class="hero-image-frames">
+                        <!-- Single frame for mobile (shown by default, hidden on desktop via media query) -->
+                        <div class="phone-frame single-frame">
+                            <img src="Assets/Ui/ui-2.png" alt="App UI" class="mockup-img">
                             <a href="Assets/App/TeenXApp.apk" download class="cta-button download-btn-mobile-frame">Download TeenX</a>
                         </div>
-                    </div>
-                    <!-- Desktop frame with three images on bigger screens -->
-                    <div class="hero-image-desktop">
-                        <div class="hero-image-multi-frames">
-                            <img src="Assets/Ui/ui-1.png" alt="App UI 1" class="left-image">
-                            <img src="Assets/Ui/ui-2.png" alt="App UI 2" class="center-image">
-                            <img src="Assets/Ui/ui-3.png" alt="App UI 3" class="right-image">
+                        
+                        <!-- Three frames for desktop (hidden by default, shown on desktop via media query) -->
+                        <div class="phone-frame left-frame">
+                            <img src="Assets/Ui/ui-1.png" alt="App UI 1" class="mockup-img">
+                        </div>
+                        <div class="phone-frame center-frame">
+                            <img src="Assets/Ui/ui-2.png" alt="App UI 2" class="mockup-img">
+                        </div>
+                        <div class="phone-frame right-frame">
+                            <img src="Assets/Ui/ui-3.png" alt="App UI 3" class="mockup-img">
                         </div>
                     </div>
                 </div>
@@ -1345,7 +1319,7 @@
                 <!-- Social media icons section -->
                 <div class="social-icons">
                     <a href="https://www.facebook.com/share/1786R6U9hb/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/fxcal/iab_auto_login/?nonce_code=iFeSLtK19xTdQGGVk0S1Tr1u6uuI7JEVmMMMHo5yiTDtfS06FZhflKYp4ue4aCqE&user_id=17841448042079837&redirect_url=%2Fteenx.app%3Fentrypoint%3Dig_profile_on_fb&source_account_id=100013871703188&iab_sso_caller=profile_links" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/fxcal/iab_auto_login/?nonce_code=iFeSLtK19xTdQGGVk0S1Tr1u6uuI7JEVmMMMHo5yiTDtfS06FZhflKYp4ue4aCqE&user_id=17841448042079837&redirect_url=%2Fteenx.app%3Fentrypoint%3Ig_profile_on_fb&source_account_id=100013871703188&iab_sso_caller=profile_links" target="_blank"><i class="fab fa-instagram"></i></a>
                     <a href="https://youtube.com/@teenxapp?si=OlZC_c_qmGXZr_-k" target="_blank"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
@@ -1608,62 +1582,37 @@
              * @param {string} basePath - The base path to the image directory.
              * @param {string} prefix - The file name prefix (e.g., 'c' for campaign images).
              * @param {number} count - The number of images to check for.
-             * @param {string} animationName - The name of the CSS animation to apply.
-             * @param {string} animationDuration - The duration of the animation.
              */
-            function loadDynamicCarousel(containerId, wrapperClass, imageClass, skeletonClass, basePath, prefix, count, animationName, animationDuration) {
+            function loadDynamicCarousel(containerId, wrapperClass, imageClass, skeletonClass, basePath, prefix, count) {
                 const container = document.getElementById(containerId);
                 if (!container) return;
-                
+
                 let imageSources = [];
                 for (let i = 1; i <= count; i++) {
                     imageSources.push(`${basePath}/${prefix}${i}.png`);
                 }
 
-                let loadedImagesCount = 0;
-                let imagesFound = false;
-
-                const wrapper = document.createElement('div');
-                wrapper.className = wrapperClass;
-
-                // Create initial skeleton loaders
-                for (let i = 0; i < count; i++) {
-                    const skeleton = document.createElement('div');
-                    skeleton.className = skeletonClass;
-                    wrapper.appendChild(skeleton);
-                }
-                container.appendChild(wrapper);
-
-                const promises = imageSources.map(src => {
-                    return new Promise((resolve) => {
+                const carouselWrapper = container;
+                const allPromises = imageSources.map(src => {
+                    return new Promise(resolve => {
                         const img = new Image();
                         img.src = src;
-                        img.onload = () => resolve({src: src, isLoaded: true});
-                        img.onerror = () => resolve({src: null, isLoaded: false});
+                        img.onload = () => resolve(`<img src="${src}" alt="${prefix}" class="${imageClass}">`);
+                        img.onerror = () => resolve('');
                     });
                 });
 
-                Promise.all(promises).then(results => {
-                    const imagesHtml = results.filter(r => r.isLoaded).map(r => `<img src="${r.src}" alt="${prefix}" class="${imageClass}">`).join('');
-
-                    if (imagesHtml.length > 0) {
-                        // All images loaded, replace skeleton loaders
-                        wrapper.innerHTML = imagesHtml + imagesHtml;
-                        
-                        // Apply animation
-                        wrapper.style.animationName = animationName;
-                        wrapper.style.animationDuration = animationDuration;
-                        wrapper.style.animationTimingFunction = 'linear';
-                        wrapper.style.animationIterationCount = 'infinite';
-
-                        // Add hover to pause functionality
-                        wrapper.addEventListener('mouseover', () => wrapper.style.animationPlayState = 'paused');
-                        wrapper.addEventListener('mouseout', () => wrapper.style.animationPlayState = 'running');
-
-                    } else {
-                        // No images found, keep skeletons and don't animate
-                        wrapper.classList.add('no-animation');
+                Promise.all(allPromises).then(results => {
+                    const validImages = results.filter(html => html !== '');
+                    if (validImages.length === 0) {
+                        // If no images found, display skeleton loaders and stop animation
+                        carouselWrapper.innerHTML = `<div class="${skeletonClass}"></div>`.repeat(count);
+                        carouselWrapper.style.animation = 'none';
+                        return;
                     }
+
+                    // Duplicate the images for infinite loop effect
+                    carouselWrapper.innerHTML = (validImages.join('') + validImages.join(''));
                 });
             }
             
@@ -1675,9 +1624,7 @@
                 'skeleton-loader',
                 'Assets/Img',
                 'c',
-                6, // Check for 6 campaign images: c1.png, c2.png, etc.
-                'slide-campaigns',
-                '25s'
+                6
             );
 
             // Load Partners Carousel
@@ -1688,9 +1635,7 @@
                 'projects-skeleton-loader',
                 'Assets/partner',
                 'p',
-                6, // Check for 6 partner logos: p1.png, p2.png, etc.
-                'slide',
-                '30s'
+                6
             );
             
             // Testimonial Carousel Logic
@@ -1700,19 +1645,21 @@
 
             function showTestimonial(index) {
                 if (testimonialWrapper) {
-                     testimonialCards.forEach(card => card.classList.remove('active'));
+                    testimonialCards.forEach(card => card.classList.remove('active'));
                     testimonialCards[index].classList.add('active');
                     testimonialWrapper.style.transform = `translateX(-${index * 100}%)`;
                 }
             }
 
             if (testimonialWrapper) {
+                // Initialize the first testimonial as active
                 testimonialCards.forEach((card, index) => {
                     if (index === 0) {
                         card.classList.add('active');
                     }
                 });
 
+                // Set interval for automatic testimonial rotation
                 setInterval(() => {
                     currentTestimonial = (currentTestimonial + 1) % testimonialCards.length;
                     showTestimonial(currentTestimonial);
@@ -1722,5 +1669,3 @@
     </script>
 </body>
 </html>
-
-
