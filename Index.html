@@ -943,8 +943,8 @@
         }
 
         .projects-carousel .carousel-item-wrapper {
-            height: 60px; /* Fixed height for the container */
-            width: 120px; /* Fixed width for the container, ensuring rectangular shape */
+            height: 50px; /* Fixed height for the container */
+            width: 100px; /* Fixed width for the container, ensuring rectangular shape */
             flex-shrink: 0; /* Prevent shrinking too much */
             flex-grow: 0; /* Prevent growing too much */
             display: flex; /* Use flex to center image inside */
@@ -1334,7 +1334,7 @@
             <li><a href="#activities">Activities</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contact-us">Contact Us</a></li>
-            <li><button id="download-btn-mobile" class="cta-button">Download TeenX</button></li>
+            <!-- Removed download button from here as it's now in main header on mobile -->
         </ul>
     </nav>
 
@@ -1540,8 +1540,8 @@
             <div class="credits">
                 <p>Developed by NeuraSoft | Contact: <a href="mailto:neurasoftware@gmail.com">neurasoftware@gmail.com</a></p>
                 <p>UI and Web Architecture R&D by <b>Team Aspiring</b></p>
+                <p id="last-updated-time"></p> <!-- Placeholder for last updated time -->
                 <p>© 2025 TeenX Bangladesh. All Rights Reserved.</p>
-                <small>last updated: 01:29:46 [HH:MM:SS]<br> 08/05/2025 [MM/DD/YYYY]</small>
             </div>
         </div>
     </footer>
@@ -2062,6 +2062,23 @@
                     }
                 }, 300); // Update progress every 300ms
             });
+
+            // Set Last Updated Time in Footer
+            const lastUpdatedElement = document.getElementById('last-updated-time');
+            if (lastUpdatedElement) {
+                const now = new Date();
+                const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+                const dateOptions = { month: '2-digit', day: '2-digit', year: 'numeric' };
+                
+                // Get timezone abbreviation
+                const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                const timeZoneAbbr = new Date().toLocaleTimeString('en-us', {timeZoneName:'short'}).split(' ')[2] || timeZone;
+
+                const formattedTime = now.toLocaleTimeString('en-US', timeOptions);
+                const formattedDate = now.toLocaleDateString('en-US', dateOptions);
+
+                lastUpdatedElement.textContent = `Last Updated: ${formattedTime} (${timeZoneAbbr}), ${formattedDate}`;
+            }
         });
     </script>
 </body>
