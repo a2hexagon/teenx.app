@@ -1685,10 +1685,11 @@
             <div class="container">
                 <h2>Contact Us</h2>
                 <div class="contact-form-container">
+                    <!-- Removed action="/" from here to prevent default browser form submission and rely solely on fetch -->
                     <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field"
-                        class="contact-form reveal" action="/">
+                        class="contact-form reveal">
                         <p style="display: none;"><label>Don’t fill this out if you’re human: <input
-                                    name="bot-field" /></label></p>
+                                        name="bot-field" /></label></p>
                         <input type="hidden" name="form-name" value="contact">
                         <div class="form-group">
                             <label for="name">Your Name</label>
@@ -1799,7 +1800,8 @@
             <span class="close-button">×</span>
             <h2>Join TeenX Bangladesh</h2>
             <p>Enter your details to receive updates and exclusive community invites!</p>
-            <form name="join-us" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="join-form" action="/">
+            <!-- Removed action="/" from here to prevent default browser form submission and rely solely on fetch -->
+            <form name="join-us" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="join-form">
                 <p style="display: none;"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
                 </p>
                 <input type="hidden" name="form-name" value="join-us">
@@ -1957,32 +1959,47 @@
                         setTimeout(() => {
                             downloadProgressContainer.style.display = 'none';
                             downloadCompleteMessage.style.display = 'block';
-                            window.location.href = e.target.href;
+                            // Trigger the actual download after simulation
+                            const link = document.createElement('a');
+                            link.href = e.target.href;
+                            link.download = 'TeenXApp.apk'; // Ensure the download attribute is set
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
                         }, 500);
                     }
                 }, 200);
             });
 
-            // --- FORM SUBMISSION (NETLIFY) ---
-            const handleFormSubmit = (event) => {
-                event.preventDefault();
+            // --- FORM SUBMISSION (NETLIFY FIX) ---
+            const handleFormSubmit = async (event) => {
+                event.preventDefault(); // Prevent default form submission (page reload)
                 const form = event.target;
                 const formData = new FormData(form);
 
-                // The hidden input 'form-name' is already in the HTML, no need to append it again here.
-                // formData.append("form-name", form.getAttribute("name"));
+                // Netlify requires the 'form-name' field for identification
+                // It's already present as a hidden input, but explicitly ensuring it here for clarity
+                if (!formData.has('form-name')) {
+                    formData.append("form-name", form.getAttribute("name"));
+                }
 
-                fetch("/", {
+                try {
+                    // Use the form's action attribute, or default to '/' if not specified
+                    const formAction = form.getAttribute('action') || '/';
+                    const response = await fetch(formAction, {
                         method: "POST",
+                        // Netlify expects application/x-www-form-urlencoded for standard HTML forms
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded"
                         },
-                        body: new URLSearchParams(formData).toString()
-                    })
-                    .then(() => {
-                        hideModals();
+                        body: new URLSearchParams(formData).toString() // Convert FormData to URL-encoded string
+                    });
+
+                    if (response.ok) { // Check if the submission was successful (HTTP 2xx status)
+                        hideModals(); // Hide any open modals
                         const thanksTitle = document.getElementById('thanks-title');
                         const thanksMessage = document.getElementById('thanks-message');
+
                         if (form.name === 'contact') {
                             thanksTitle.textContent = "Message Sent!";
                             thanksMessage.textContent = "Thanks for reaching out. We'll get back to you soon!";
@@ -1993,19 +2010,29 @@
                             thanksTitle.textContent = "Success!";
                             thanksMessage.textContent = "Thank you! We'll keep you updated.";
                         }
-                        showModal(thanksModal);
-                        form.reset();
-                    })
-                    .catch(error => {
-                        console.error("Form submission error:", error);
+                        showModal(thanksModal); // Show the success modal
+                        form.reset(); // Clear the form fields
+                    } else {
+                        // Handle non-OK responses (e.g., HTTP 4xx, 5xx)
+                        console.error("Form submission failed with status:", response.status);
                         const thanksTitle = document.getElementById('thanks-title');
                         const thanksMessage = document.getElementById('thanks-message');
                         thanksTitle.textContent = "Submission Failed!";
-                        thanksMessage.textContent = "There was an error submitting your form. Please try again later.";
+                        thanksMessage.textContent = `There was an error submitting your form. Status: ${response.status}. Please try again later.`;
                         showModal(thanksModal);
-                    });
+                    }
+                } catch (error) {
+                    // Handle network errors or other exceptions during fetch
+                    console.error("Form submission error:", error);
+                    const thanksTitle = document.getElementById('thanks-title');
+                    const thanksMessage = document.getElementById('thanks-message');
+                    thanksTitle.textContent = "Submission Failed!";
+                    thanksMessage.textContent = "There was a network error submitting your form. Please check your internet connection and try again.";
+                    showModal(thanksModal);
+                }
             };
 
+            // Attach the event listener to all forms with data-netlify="true"
             document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
                 form.addEventListener('submit', handleFormSubmit);
             });
