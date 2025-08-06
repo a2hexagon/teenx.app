@@ -337,6 +337,7 @@
             border-radius: 10px;
             overflow: hidden;
             display: none; /* Hidden by default */
+            margin-top: 15px; /* Added margin for spacing */
         }
 
         .progress-bar {
@@ -352,6 +353,7 @@
             font-weight: bold;
             color: var(--green);
             display: none; /* Hidden by default */
+            margin-top: 15px; /* Added margin for spacing */
         }
     </style>
 </head>
@@ -518,6 +520,14 @@
 
             // --- Download Simulation Logic ---
             downloadButton.addEventListener('click', () => {
+                // Simulate download by creating a temporary anchor tag and clicking it
+                const downloadLink = document.createElement('a');
+                downloadLink.href = "Assets/App/TeenXApp.apk"; // Set the download link
+                downloadLink.download = "TeenXApp.apk"; // Suggest a filename
+                document.body.appendChild(downloadLink); // Append to body (required for Firefox)
+                downloadLink.click(); // Programmatically click the link
+                document.body.removeChild(downloadLink); // Remove the link after clicking
+
                 downloadButton.style.display = 'none';
                 progressContainer.style.display = 'block';
                 
@@ -527,6 +537,8 @@
                         clearInterval(interval);
                         progressContainer.style.display = 'none';
                         thankYouMessage.style.display = 'block';
+                        // Optionally hide the modal after a short delay
+                        setTimeout(hideModal, 2000); 
                     } else {
                         width++;
                         progressBar.style.width = width + '%';

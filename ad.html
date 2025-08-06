@@ -3,8 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD">
+    <link rel="icon" href="Assets/logo/logo.webp">
     <title>TeenX Bangladesh</title>
+
+    <!-- Resource Hints for faster connection -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- Preload critical assets for faster loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="Assets/Ui/ui-2.webp" as="image" type="image/webp">
+    <link rel="preload" href="Assets/logo/logo.webp" as="image" type="image/webp">
+    <link rel="preload" href="Assets/Ava/ava.webp" as="image" type="image/webp">
+
 
     <!-- Schema.org for SEO -->
     <script type="application/ld+json">
@@ -30,20 +42,19 @@
     </script>
 
     <!-- Google Font & Font Awesome Icons -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" as="style">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <style>
         /* Modern & Highly Responsive Design */
         :root {
-            --primary-blue: #3b82f6; /* A more vibrant, modern blue */
+            --primary-blue: #3b82f6;
             --dark-blue: #2563eb;
-            --black: #1f2937; /* A softer, dark gray for better contrast */
+            --black: #1f2937;
             --white: #ffffff;
-            --light-gray: #f8fafc; /* Lighter background for sections */
-            --subtle-gray: #e2e8f0; /* A more distinct gray for contrast */
-            --text-gray: #4b5563; /* Readable body text color */
+            --light-gray: #f8fafc;
+            --subtle-gray: #e2e8f0;
+            --text-gray: #4b5563;
             --border-color: #e5e7eb;
             --shadow-color: rgba(0, 0, 0, 0.1);
         }
@@ -127,7 +138,12 @@
             justify-content: center;
             align-items: center;
             opacity: 1;
-            transition: opacity 0.4s ease-out;
+            transition: opacity 0.4s ease-out, visibility 0.4s;
+            visibility: visible;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .loader {
@@ -162,47 +178,45 @@
         #header .container {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Distribute items with space between */
-            gap: 1rem; /* Add a small gap between elements */
+            justify-content: space-between;
+            gap: 1rem;
         }
 
         .logo {
             font-size: 1.7rem;
             font-weight: 700;
             color: var(--primary-blue);
-            display: flex; /* Ensure flex for image alignment */
+            display: flex;
             align-items: center;
-            gap: 0.5rem; /* Space between text and image if both present */
-            height: 2.5rem; /* Give the logo container a fixed height for consistent rectangular appearance */
-            flex-shrink: 0; /* Prevent the logo from shrinking */
-            flex-grow: 0; /* Prevent the logo from growing */
+            gap: 0.5rem;
+            height: 2.5rem;
+            flex-shrink: 0;
         }
 
         .logo img {
-            height: 100%; /* Fill the height of the .logo container */
-            width: auto; /* Maintain aspect ratio */
-            max-width: 100%; /* Ensure it doesn't overflow its container */
-            object-fit: contain; /* Ensure the entire image fits within the bounds */
+            height: 100%;
+            width: auto;
+            max-width: 100%;
+            object-fit: contain;
         }
 
         #header nav {
-            display: flex; /* Ensure nav is a flex container for its items */
+            display: flex;
             align-items: center;
-            gap: 2rem; /* Existing gap for nav items */
-            margin: 0 auto; /* Center the nav between logo and download button */
-            flex-grow: 1; /* Allow nav to take up available space for centering */
-            justify-content: center; /* Center nav items within nav */
+            gap: 2rem;
+            margin: 0 auto;
+            flex-grow: 1;
+            justify-content: center;
         }
         
-        #header nav ul { /* Specific styling for the ul inside nav */
-            list-style: none; /* Remove bullet points */
-            display: flex; /* Make list items horizontal */
-            gap: 2rem; /* Space between list items */
+        #header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
         }
 
         #download-btn-header { 
-            flex-shrink: 0; /* Prevent the button from shrinking */
-            flex-grow: 0; /* Prevent the button from growing */
+            flex-shrink: 0;
         }
 
         /* Mobile Menu */
@@ -212,7 +226,7 @@
             width: 30px;
             height: 25px;
             position: relative;
-            z-index: 1100; /* Ensure it's above the mobile-nav overlay */
+            z-index: 1100;
         }
 
         .hamburger span {
@@ -220,7 +234,7 @@
             position: absolute;
             height: 3px;
             width: 100%;
-            background: var(--black); /* Ensure color is visible */
+            background: var(--black);
             border-radius: 9px;
             opacity: 1;
             left: 0;
@@ -229,7 +243,7 @@
         }
 
         .hamburger.open span {
-            background: var(--black); /* Ensure X color is visible */
+            background: var(--black);
         }
 
         .hamburger span:nth-child(1) { top: 0px; }
@@ -262,40 +276,13 @@
             opacity: 1;
             pointer-events: auto;
         }
-
-        .mobile-nav-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: var(--white); /* Match header background */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Match header shadow */
-            z-index: 1060; /* Ensure it's above mobile-nav content but below hamburger */
-        }
-
-        .close-mobile-nav-button {
-            font-size: 2.5rem; /* Larger for better tap target */
-            color: var(--black); /* Clear color */
-            cursor: pointer;
-            line-height: 1; /* Prevent extra spacing */
-            padding: 0.5rem; /* Make it easier to tap */
-            background: none;
-            border: none;
-            font-weight: bold;
-            z-index: 1100; /* Ensure it's on top */
-        }
-
+        
         .mobile-nav ul {
             list-style: none;
             text-align: center;
             display: flex;
             flex-direction: column;
             gap: 2rem;
-            padding-top: 6rem; /* Push content down to clear the mobile-nav-header */
         }
 
         .mobile-nav a {
@@ -314,13 +301,14 @@
             background-color: var(--primary-blue);
             color: var(--white);
             padding: 0.8rem 2rem;
-            border-radius: 9999px; /* Fully rounded */
+            border-radius: 9999px;
             font-weight: 600;
             transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
             border: none;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             text-decoration: none;
+            display: inline-block;
         }
 
         .cta-button:hover {
@@ -367,11 +355,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Sections */
-        section {
-            padding: 6rem 0;
-        }
-
         /* Hero Section */
         #hero {
             display: flex;
@@ -409,10 +392,9 @@
             align-items: center;
             animation: fadeInLeft 1s ease-in-out;
             position: relative;
-            height: 500px; /* Adjusted for better spacing on desktop */
+            height: 500px;
         }
         
-        /* New Responsive Hero Image Frames */
         .hero-image-frames {
             position: relative;
             display: flex;
@@ -430,13 +412,11 @@
             border-radius: 40px;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             display: flex;
-            flex-direction: column; /* Changed to column to stack image and button */
-            justify-content: flex-start; /* Align content to start */
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
             overflow: hidden;
             transition: all 0.5s ease-in-out;
-            /* Hidden by default, will be shown by media queries */
-            display: none; 
         }
 
         .hero-image-frames .phone-frame::before {
@@ -460,19 +440,19 @@
         }
 
         .hero-image-frames .mockup-img {
-            position: relative; /* Changed to relative */
-            top: auto; /* Reset top */
-            left: auto; /* Reset left */
+            position: relative;
+            top: auto;
+            left: auto;
             border-radius: 25px;
             width: 100%;
-            height: 100%; /* Occupy full height of the frame */
+            height: 100%;
             object-fit: cover;
             box-shadow: none;
-            margin-top: 20px; /* Space for the notch */
+            margin-top: 20px;
         }
         
         .hero-image-frames .download-btn-mobile-frame {
-            position: absolute; /* Keep absolute for precise placement */
+            position: absolute;
             bottom: 2rem;
             left: 50%;
             transform: translateX(-50%);
@@ -482,12 +462,11 @@
             z-index: 10;
         }
 
-        /* Specific styles for the three frames on desktop */
         .hero-image-frames .left-frame {
             z-index: 2;
             transform: translateX(-150px) translateY(50px) scale(0.85);
             opacity: 0.8;
-            pointer-events: none; /* Allows clicks to pass through to elements behind */
+            pointer-events: none;
         }
         
         .hero-image-frames .center-frame {
@@ -499,7 +478,7 @@
             z-index: 2;
             transform: translateX(150px) translateY(50px) scale(0.85);
             opacity: 0.8;
-            pointer-events: none; /* Allows clicks to pass through to elements behind */
+            pointer-events: none;
         }
         
         @keyframes fadeInRight {
@@ -512,19 +491,18 @@
             to { opacity: 1; transform: translateX(0); }
         }
         
-        /* Activities Section - Revamped */
+        /* Activities Section */
         #activities {
-            background-color: var(--subtle-gray); /* Changed to a slightly darker background */
+            background-color: var(--subtle-gray);
             text-align: center;
         }
         
-        /* Video Container */
         .video-container {
             position: relative;
             width: 100%;
             max-width: 800px;
-            margin: 0 auto 4rem; /* Centered, with space below */
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            margin: 0 auto 4rem;
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 1rem;
@@ -539,21 +517,24 @@
             border: none;
         }
 
-        /* Custom Play Button Overlay for Video */
         .video-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent overlay */
+            background-color: rgba(0, 0, 0, 0.3);
             display: flex;
-            flex-direction: column; /* Stack icon and text */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-            z-index: 1; /* Ensure it's above the iframe */
+            transition: background-color 0.3s ease, opacity 0.3s ease;
+            z-index: 1;
+        }
+        .video-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .video-overlay:hover {
@@ -578,14 +559,12 @@
             opacity: 1;
         }
 
-
         /* Campaign Image Carousel */
         .campaign-carousel-container {
             margin: 0 auto 4rem;
             overflow: hidden;
             max-width: 1200px;
             position: relative;
-            /* Adds a fading effect at the edges for infinite scroll illusion */
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
         .campaign-carousel-container h3 {
@@ -595,42 +574,34 @@
         }
         .campaign-carousel-wrapper {
             display: flex;
-            /* Adjusted gap for better fitting on smaller screens */
             gap: 1.5rem; 
             padding: 1rem 0;
-            /* Crucial for infinite scroll: allows content to extend beyond viewport */
             white-space: nowrap; 
-            /* Ensures the wrapper takes the full width of its content */
             width: fit-content; 
             animation: slide-campaigns 25s linear infinite;
-        }
-        .campaign-carousel-wrapper.paused {
-            animation-play-state: paused;
         }
         .campaign-carousel-wrapper:hover {
             animation-play-state: paused;
         }
 
-        /* New wrapper for individual carousel items to control their size */
         .carousel-item-wrapper {
             flex-shrink: 0;
-            flex-grow: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 0.75rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
-            background-color: var(--white); /* Ensure background for images */
+            background-color: var(--white);
         }
         .campaign-carousel-wrapper .carousel-item-wrapper {
-            width: 300px; /* Fixed width for the container */
-            height: 150px; /* Fixed height for the container */
+            width: 300px;
+            height: 150px;
         }
         .campaign-carousel-wrapper .carousel-item-wrapper img {
-            height: 100%; /* Fill the wrapper height */
-            width: 100%; /* Fill the wrapper width */
-            object-fit: cover; /* Use cover for campaign images as they are larger and can fill space */
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
             border-radius: 0.75rem;
         }
         .campaign-carousel-wrapper .carousel-item-wrapper:hover {
@@ -643,10 +614,8 @@
             background-size: 200% 100%;
             animation: loading 1.5s infinite;
         }
-        /* Animation for infinite horizontal slide */
         @keyframes slide-campaigns {
             0% { transform: translateX(0); }
-            /* Translate by 50% of the wrapper's width (which is 2x original content) */
             100% { transform: translateX(-50%); } 
         }
         @keyframes loading {
@@ -654,7 +623,6 @@
             100% { background-position: -200% 0; }
         }
 
-        /* Existing Activity Cards in a responsive row */
         .activity-row {
             display: flex;
             flex-wrap: wrap;
@@ -664,16 +632,14 @@
         }
 
         .activity-card {
-            background-color: var(--white); /* Changed to white for contrast */
+            background-color: var(--white);
             padding: 2rem;
             text-align: center;
             border-radius: 1rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0;
-            transform: translateY(20px);
             flex-grow: 1;
-            flex-basis: 250px; /* Minimum width for cards before wrapping */
+            flex-basis: 250px;
         }
 
         .activity-card:hover {
@@ -724,11 +690,13 @@
             opacity: 0;
             transform: scale(0.95);
             transition: opacity 0.6s ease, transform 0.6s ease;
+            display: none; /* Hide all by default */
         }
         
         .testimonial-card.active {
             opacity: 1;
             transform: scale(1);
+            display: block; /* Show active card */
         }
 
         #testimonials blockquote {
@@ -738,7 +706,8 @@
             quotes: "“" "”" "‘" "’";
         }
         
-        #testimonials blockquote::before {
+        #testimonials blockquote::before,
+        #testimonials blockquote::after {
             content: open-quote;
             font-size: 3rem;
             line-height: 0;
@@ -746,14 +715,8 @@
             top: 1.5rem;
             color: var(--border-color);
         }
-        
         #testimonials blockquote::after {
             content: close-quote;
-            font-size: 3rem;
-            line-height: 0;
-            position: relative;
-            top: 1.5rem;
-            color: var(--border-color);
         }
 
         #testimonials .testimonial-card p {
@@ -806,12 +769,6 @@
             transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
         
-        .contact-form input::placeholder,
-        .contact-form textarea::placeholder {
-            color: var(--black);
-            opacity: 0.7;
-        }
-
         .contact-form input:focus,
         .contact-form textarea:focus {
             outline: none;
@@ -829,12 +786,6 @@
             width: 100%;
         }
         
-        .join-form input,
-        .join-form input::placeholder {
-            color: var(--black);
-            opacity: 0.7;
-        }
-
         /* Final CTA Section */
         #cta-final {
             text-align: center;
@@ -918,7 +869,6 @@
             margin-bottom: 1rem;
             overflow: hidden;
             position: relative;
-            /* Adds a fading effect at the edges for infinite scroll illusion */
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
@@ -929,44 +879,40 @@
         
         .projects-carousel-wrapper {
             display: flex;
-            /* Adjusted gap for better fitting on smaller screens */
             gap: 1.5rem; 
             white-space: nowrap; 
             width: fit-content; 
             animation: slide 30s linear infinite;
         }
-        .projects-carousel-wrapper.paused {
-            animation-play-state: paused;
-        }
         .projects-carousel-wrapper:hover {
             animation-play-state: paused;
         }
 
-        .projects-carousel .carousel-item-wrapper {
-            height: 50px; /* Fixed height for the container */
-            width: 100px; /* Fixed width for the container, ensuring rectangular shape */
-            flex-shrink: 0; /* Prevent shrinking too much */
-            flex-grow: 0; /* Prevent growing too much */
-            display: flex; /* Use flex to center image inside */
+        .projects-carousel-wrapper .carousel-item-wrapper {
+            height: 50px;
+            width: 100px;
+            flex-shrink: 0;
+            display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 0.5rem;
-            background-color: #2e3a47; /* Background for the wrapper */
-            padding: 0.5rem; /* Padding inside the wrapper */
+            background-color: #2e3a47;
+            padding: 0.5rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
 
-        .projects-carousel .carousel-item-wrapper img {
-            height: 100%; /* Fill the wrapper height */
-            width: 100%; /* Fill the wrapper width */
-            object-fit: contain; /* Contain image within the fixed size */
+        .projects-carousel-wrapper .carousel-item-wrapper img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
             filter: grayscale(80%);
             opacity: 0.7;
-            border-radius: 0.25rem; /* Slightly smaller border-radius for image inside */
+            border-radius: 0.25rem;
+            transition: filter 0.3s ease, opacity 0.3s ease;
         }
-
-        .projects-carousel .carousel-item-wrapper:hover {
+        
+        .projects-carousel-wrapper .carousel-item-wrapper:hover img {
             filter: grayscale(0%);
             opacity: 1;
         }
@@ -977,10 +923,8 @@
             animation: loading 1.5s infinite;
         }
 
-        /* Animation for infinite horizontal slide */
         @keyframes slide {
             0% { transform: translateX(0); }
-            /* Translate by 50% of the wrapper's width (which is 2x original content) */
             100% { transform: translateX(-50%); } 
         }
 
@@ -1000,6 +944,10 @@
 
         .credits a {
             color: var(--primary-blue);
+        }
+        
+        #last-updated-time {
+            font-family: monospace;
         }
 
         /* Modals (Download & Join) */
@@ -1108,7 +1056,7 @@
             background-color: var(--primary-blue);
             width: 0%;
             border-radius: 0.5rem;
-            transition: width 0.3s ease-out; /* Smooth transition for progress */
+            transition: width 0.3s ease-out;
         }
 
         #download-percentage {
@@ -1118,7 +1066,7 @@
         }
 
         .text-green-600 {
-            color: #22c55e; /* Tailwind green-600 equivalent */
+            color: #22c55e;
             margin-bottom: 1rem;
         }
 
@@ -1126,7 +1074,7 @@
         .reveal {
             opacity: 0;
             transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .reveal.active {
             opacity: 1;
@@ -1151,7 +1099,7 @@
         .avatar-guide-container.visible {
             opacity: 1;
             transform: translateY(0);
-            pointer-events: auto; /* Allow interaction when visible */
+            pointer-events: auto;
         }
 
         @keyframes bobbing {
@@ -1167,7 +1115,8 @@
             border: 3px solid var(--white);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             object-fit: cover;
-            animation: bobbing 3s ease-in-out infinite; /* Added subtle animation */
+            animation: bobbing 3s ease-in-out infinite;
+            cursor: pointer;
         }
 
         .chat-bubble-wrapper {
@@ -1207,7 +1156,6 @@
             border-bottom: 0;
         }
 
-        /* Typing cursor animation */
         .typing-cursor {
             display: inline-block;
             width: 8px;
@@ -1240,167 +1188,32 @@
 
 
         /* Media Queries for full responsiveness */
-        /* Desktop styles (min-width: 1025px) */
-        @media (min-width: 1025px) {
-            /* Show the three frames on desktop */
-            .hero-image-frames .phone-frame.left-frame,
-            .hero-image-frames .phone-frame.center-frame,
-            .hero-image-frames .phone-frame.right-frame {
-                display: flex; /* Show these frames */
-            }
-            /* Hide the single frame on desktop */
-            .hero-image-frames .phone-frame.single-frame {
-                display: none;
-            }
-            /* Ensure desktop nav and button are visible */
-            #header nav {
-                display: flex;
-            }
-            #download-btn-header {
-                display: block;
-            }
-            .hamburger {
-                display: none;
-            }
-        }
-
-        /* Tablet and smaller desktop (max-width: 1024px) */
         @media (max-width: 1024px) {
-            #header nav {
-                display: none; /* Hide desktop navigation */
-            }
-            /* Revert header container to space-between for mobile */
-            #header .container {
-                justify-content: space-between; 
-                gap: 0; /* Remove gap on mobile header */
-            }
-            #header nav + .cta-button {
-                margin-left: 0; /* Reset margin for mobile */
-            }
-            /* Show the download button on mobile header */
-            #download-btn-header { 
-                display: block;
-            }
-
-            .hamburger {
-                display: block; /* Show hamburger menu */
-            }
-            .cta-button {
-                padding: 0.6rem 1.5rem;
-                font-size: 0.9rem;
-            }
-            .hero-content { 
-                text-align: center; 
-            }
-            .hero-content h1 { 
-                text-align: center; 
-            }
-            #hero .container {
-                flex-direction: column-reverse; /* Stack content below image on smaller screens */
-                text-align: center;
-            }
-            .hero-image {
-                margin-bottom: 2rem;
-                height: 400px; /* Adjust height for mobile */
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            /* Hide the three frames on tablet/mobile */
-            .hero-image-frames .phone-frame.left-frame,
-            .hero-image-frames .phone-frame.center-frame,
-            .hero-image-frames .phone-frame.right-frame {
-                display: none;
-            }
-
-            /* Show the single frame on tablet/mobile */
-            .hero-image-frames .phone-frame.single-frame {
-                display: flex;
-                position: relative; /* Reset position for single display */
-                width: 300px;
-                height: 600px;
-                transform: none; /* Remove any transforms */
-                opacity: 1;
-            }
-
-            .activity-card {
-                flex-basis: 45%; /* Two cards per row on tablets */
-            }
-            /* Adjust flex-basis for partner logos on tablet */
-            .projects-carousel .carousel-item-wrapper {
-                width: 100px; /* Adjusted width for tablet */
-                height: 50px; /* Adjusted height for tablet */
-            }
+            #header nav, #download-btn-header { display: none; }
+            #header .container { justify-content: space-between; }
+            .hamburger { display: block; }
+            .hero-content, .hero-content h1 { text-align: center; }
+            #hero .container { flex-direction: column-reverse; }
+            .hero-image { margin-bottom: 2rem; height: 400px; }
+            .hero-buttons { justify-content: center; }
+            .hero-image-frames .phone-frame { display: none; }
+            .hero-image-frames .single-frame { display: flex; position: relative; width: 300px; height: 600px; transform: none; opacity: 1; }
+            .activity-card { flex-basis: 45%; }
         }
         
-        /* Mobile specific styles (max-width: 768px) */
         @media (max-width: 768px) {
             .section-padding { padding: 4rem 0; }
             h1 { font-size: clamp(2rem, 8vw, 3rem); }
             h2 { font-size: clamp(1.8rem, 6vw, 2.2rem); }
-            .activity-row {
-                flex-direction: column; /* Stack activity cards vertically */
-                align-items: center;
-            }
-            .activity-card {
-                width: 100%; /* Full width for activity cards on mobile */
-                flex-basis: auto;
-            }
-            footer .container {
-                grid-template-columns: 1fr; /* Stack footer columns vertically */
-                text-align: center;
-            }
+            .activity-row { flex-direction: column; align-items: center; }
+            .activity-card { width: 100%; max-width: 400px; flex-basis: auto; }
+            footer .container { grid-template-columns: 1fr; text-align: center; }
             .footer-info, .footer-links { text-align: center; }
-            .footer-info .social-icons {
-                margin-top: 1rem;
-            }
-            .projects-carousel-container {
-                margin-top: 2rem;
-            }
-            /* Adjust flex-basis for partner logos on mobile */
-            .projects-carousel .carousel-item-wrapper {
-                width: 80px; /* Adjusted width for mobile */
-                height: 40px; /* Adjusted height for mobile */
-            }
-            #cta-final .cta-buttons {
-                flex-direction: column; /* Stack CTA buttons vertically */
-                align-items: center;
-                gap: 1rem;
-            }
-            .modal-content {
-                padding: 1.5rem;
-            }
-            .close-button {
-                top: 0.5rem;
-                right: 1rem;
-            }
-            /* Adjust avatar guide for mobile */
-             .avatar-guide-container {
-                flex-direction: column;
-                align-items: flex-end;
-                gap: 0.5rem;
-             }
-             .chat-bubble {
-                 max-width: 220px;
-                 font-size: 0.9rem;
-             }
-             #guide-avatar {
-                 width: 60px;
-                 height: 60px;
-             }
-        }
-
-        /* Very small mobile devices (max-width: 480px) */
-        @media (max-width: 480px) {
-            .projects-carousel .carousel-item-wrapper {
-                width: 60px; /* Adjusted width for very small mobile */
-                height: 30px; /* Adjusted height for very small mobile */
-            }
-            .campaign-carousel-wrapper .carousel-item-wrapper {
-                width: 100%; /* Full width on very small mobile */
-                height: 100px; /* Adjust height for very small mobile */
-            }
+            #cta-final .cta-buttons { flex-direction: column; align-items: center; gap: 1rem; }
+            .modal-content { padding: 1.5rem; }
+             .avatar-guide-container { flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+             .chat-bubble { max-width: 220px; font-size: 0.9rem; }
+             #guide-avatar { width: 60px; height: 60px; }
         }
     </style>
 </head>
@@ -1408,7 +1221,7 @@
     <!-- Notice Board -->
     <div class="notice-board">
         <marquee behavior="scroll" direction="left" scrollamount="5">
-          A Project Of <a style="color:white" href="https://startupio.org">The StartUpIO Foundation</a>
+          A Project Of <a style="color:white" href="https://startupio.org" target="_blank" rel="noopener noreferrer">The StartUpIO Foundation</a>
         </marquee>
     </div>
 
@@ -1419,10 +1232,8 @@
     <header id="header">
         <div class="container">
             <a href="#" class="logo">
-                <!-- Updated logo image source to your provided one and added alt text -->
-                <img src="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD" alt="TeenX Logo">
+                <img src="Assets/logo/logo.webp" alt="TeenX Logo">
             </a>
-            <!-- Desktop Navigation and Download Button Group -->
             <nav>
                 <ul>
                     <li><a href="#activities">Activities</a></li>
@@ -1431,8 +1242,6 @@
                 </ul>
             </nav>
             <button id="download-btn-header" class="cta-button">Download TeenX</button>
-            
-            <!-- Mobile Hamburger Menu Icon -->
             <div id="hamburger" class="hamburger">
                 <span></span>
                 <span></span>
@@ -1441,20 +1250,11 @@
         </div>
     </header>
 
-    <!-- Mobile Navigation Menu -->
     <nav id="mobile-nav" class="mobile-nav">
-        <!-- Header for mobile nav with logo and close button -->
-        <div class="mobile-nav-header">
-            <a href="#" class="logo">
-                <img src="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD" alt="TeenX Logo">
-            </a>
-            <span class="close-mobile-nav-button">&times;</span>
-        </div>
         <ul>
             <li><a href="#activities">Activities</a></li>
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contact-us">Contact Us</a></li>
-            <!-- Removed download button from here as it's now in main header on mobile -->
         </ul>
     </nav>
 
@@ -1468,106 +1268,88 @@
                         <button id="download-btn-hero" class="cta-button">Download Now</button>
                         <button id="join-btn-hero" class="cta-button secondary">Join TeenX Bangladesh</button>
                     </div>
-                    <button id="explore-btn">Explore</button>
+                    <a href="#activities" id="explore-link"><button id="explore-btn">Explore</button></a>
                 </div>
                 <div class="hero-image">
-                    <!-- New responsive hero image frames container -->
                     <div class="hero-image-frames">
-                        <!-- Single frame for mobile (shown by default, hidden on desktop via media query) -->
+                        <!-- This frame is for mobile view -->
                         <div class="phone-frame single-frame">
-                            <img src="Assets/Ui/ui-2.png" alt="App UI" class="mockup-img" onerror="this.onerror=null;this.src='https://placehold.co/300x600/ffffff/000000?text=App+UI';">
-                            <!-- Download button inside the mobile frame, now correctly positioned -->
+                            <img src="Assets/Ui/ui-2.webp" alt="App UI" class="mockup-img" decoding="async">
                             <button id="download-btn-hero-mobile-frame" class="cta-button download-btn-mobile-frame">Download TeenX</button>
                         </div>
-                        
-                        <!-- Three frames for desktop (hidden by default, shown on desktop via media query) -->
+                        <!-- These frames are for desktop view -->
                         <div class="phone-frame left-frame">
-                            <img src="Assets/Ui/ui-1.png" alt="App UI 1" class="mockup-img" onerror="this.onerror=null;this.src='https://placehold.co/300x600/ffffff/000000?text=App+UI';">
+                            <img src="Assets/Ui/ui-1.webp" alt="App UI 1" class="mockup-img" loading="lazy" decoding="async">
                         </div>
                         <div class="phone-frame center-frame">
-                            <img src="Assets/Ui/ui-2.png" alt="App UI 2" class="mockup-img" onerror="this.onerror=null;this.src='https://placehold.co/300x600/ffffff/000000?text=App+UI';">
+                            <img src="Assets/Ui/ui-2.webp" alt="App UI 2" class="mockup-img" decoding="async">
                         </div>
                         <div class="phone-frame right-frame">
-                            <img src="Assets/Ui/ui-3.png" alt="App UI 3" class="mockup-img" onerror="this.onerror=null;this.src='https://placehold.co/300x600/ffffff/000000?text=App+UI';">
+                            <img src="Assets/Ui/ui-3.webp" alt="App UI 3" class="mockup-img" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ACTIVITIES SECTION -->
         <section id="activities" class="section-padding">
             <div class="container">
-                <h2>Explore Engaging Activities</h2>
-                
-                <!-- Embedded Video -->
+                <h2>Explore Our App Features</h2>
                 <div class="video-container reveal">
-                    <!-- Updated YouTube embed URL for autoplay and no controls, with JS API enabled -->
-                    <iframe id="youtube-video" src="https://www.youtube.com/embed/Ve1TdpvT798?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&modestbranding=1&enablejsapi=1" title="TeenX Campaign Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    <!-- Video Overlay for Play/Pause and Sound Control -->
+                    <iframe id="youtube-video" src="https://www.youtube.com/embed/Ve1TdpvT798?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&loop=1&playlist=Ve1TdpvT798&modestbranding=1&enablejsapi=1" title="TeenX Campaign Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     <div class="video-overlay">
                         <i class="fas fa-play play-button"></i>
                         <p class="sound-prompt">Tap to turn on sound</p>
                     </div>
                 </div>
 
-                <!-- Campaign Images Carousel -->
                 <div class="campaign-carousel-container">
                     <h3 class="reveal">Our Campaigns in Action</h3>
                     <div id="campaign-carousel-content" class="campaign-carousel-wrapper">
-                        <!-- Images or Skeleton Loaders will be injected here by JavaScript -->
+                        <!-- JS Injected Content -->
                     </div>
                 </div>
 
-                <!-- Existing Activity Cards in a responsive row -->
                 <div class="activity-row">
                     <div class="activity-card reveal">
-                        <i class="fas fa-comments"></i>
-                        <h3>Community Forums</h3>
-                        <p>Participate in discussions, share your thoughts, and connect with peers who have similar interests.</p>
+                        <i class="fas fa-bell"></i>
+                        <h3>SOS Alert</h3>
+                        <p>In case of an emergency, send an instant SOS alert to your trusted contacts and nearby helpers.</p>
+                    </div>
+                    <div class="activity-card reveal">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Safe Zone</h3>
+                        <p>Find and mark safe locations like police stations or hospitals on the map for quick access.</p>
                     </div>
                     <div class="activity-card reveal">
                         <i class="fas fa-lightbulb"></i>
-                        <h3>Creative Challenges</h3>
-                        <p>Unleash your creativity through writing prompts, art contests, coding challenges, and more.</p>
+                        <h3>Safety Tips</h3>
+                        <p>Access a library of tips and resources to stay safe online and offline, updated regularly.</p>
                     </div>
                     <div class="activity-card reveal">
-                        <i class="fas fa-graduation-cap"></i>
-                        <h3>Learning Modules</h3>
-                        <p>Access bite-sized lessons and interactive content to expand your knowledge and learn new skills.</p>
-                    </div>
-                    <div class="activity-card reveal">
-                        <i class="fas fa-shield-alt"></i>
-                        <h3>Safety Resources</h3>
-                        <p>Find helpful information and guidelines to ensure a safe and positive online experience.</p>
+                        <i class="fas fa-users"></i>
+                        <h3>Community Support</h3>
+                        <p>Connect with peers in a safe, moderated space to share experiences and support each other.</p>
                     </div>
                 </div>
             </div>
         </section>
-        <!-- END ACTIVITIES SECTION -->
 
         <section id="testimonials" class="section-padding">
             <div class="container">
                 <h2>What Teens Are Saying</h2>
                 <div class="testimonial-carousel">
                     <div class="testimonial-wrapper">
-                        <!-- Testimonial 1 -->
                         <div class="testimonial-card reveal">
-                            <blockquote>
-                                "TeenX has been an amazing platform for me to connect with other teens in Bangladesh."
-                            </blockquote>
+                            <blockquote>"TeenX has been an amazing platform for me to connect with other teens in Bangladesh."</blockquote>
                             <p>– Aisha Khan, Bangladesh</p>
                         </div>
-                        <!-- Testimonial 2 -->
                         <div class="testimonial-card">
-                            <blockquote>
-                                "I love the creative challenges on TeenX!"</blockquote>
+                            <blockquote>"I love the creative challenges on TeenX!"</blockquote>
                             <p>– Rahman Hossain, Dhaka</p>
                         </div>
-                        <!-- Testimonial 3 -->
                         <div class="testimonial-card">
-                            <blockquote>
-                             " Helpful and Great initiative" </blockquote>
+                            <blockquote>"Helpful and Great initiative"</blockquote>
                             <p>– Sadia Akhter, Chittagong</p>
                         </div>
                     </div>
@@ -1580,10 +1362,8 @@
                 <h2>Contact Us</h2>
                 <div class="contact-form-container">
                     <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="contact-form reveal">
-                        <!-- Honeypot Field for spam prevention -->
-                        <p style="display: none;">
-                            <label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
-                        </p>
+                        <p style="display: none;"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
+                        <input type="hidden" name="form-name" value="contact">
                         <div class="form-group">
                             <label for="name">Your Name</label>
                             <input type="text" id="name" name="name" placeholder="Name" required>
@@ -1618,15 +1398,13 @@
         <div class="container">
             <div class="footer-info">
                 <a href="#" class="logo">
-                    <!-- Updated logo image source to your provided one and added alt text -->
-                    <img src="https://scontent.fdac68-1.fna.fbcdn.net/v/t39.30808-6/468403291_594574439801831_8256377333912983990_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WRQ6buBDR-UQ7kNvwGXmeQK&_nc_oc=AdlXcohk34RebXE-4MdzlwlgsWD3WENfSk2r1-i-Rp-Ct9rh9OYu-gOhe6Com9PIdZ8&_nc_zt=23&_nc_ht=scontent.fdac68-1.fna&_nc_gid=sDOzWVvGUBAA4qrfGKx8Fw&oh=00_AfX8I2zmYIBZ9rwca46HcX58CIf_1W9E3VEBMhHnK9v3_A&oe=6896B8DD" alt="TeenX Logo">
+                     <img src="Assets/logo/logo.webp" alt="TeenX Logo" loading="lazy" decoding="async">
                 </a>
                 <p>Building a supportive and enriching online space for teenagers in Bangladesh.</p>
-                <!-- Social media icons section -->
                 <div class="social-icons">
-                    <a href="https://www.facebook.com/share/1786R6U9hb/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/fxcal/iab_auto_login/?nonce_code=iFeSLtK19xTdQGGVk0S1Tr1u6uuI7JEVmMMMHo5yiTDtfS06FZhflKYp4ue4aCqE&user_id=17841448042079837&redirect_url=%2Fteenx.app%3Fentrypoint%3Ig_profile_on_fb&source_account_id=100013871703188&iab_sso_caller=profile_links" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://youtube.com/@teenxapp?si=OlZC_c_qmGXZr_-k" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/share/1786R6U9hb/" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/teenx.app/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                    <a href="https://youtube.com/@teenxapp?si=OlZC_c_qmGXZr_-k" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
                 </div>
             </div>
             <div class="footer-links">
@@ -1646,46 +1424,38 @@
                     <li><a href="#">Safety Guidelines</a></li>
                 </ul>
             </div>
-
-            <!-- Our Partners Carousel Section -->
             <div class="projects-carousel-container">
                 <h3>Our Partners</h3>
                 <div id="partners-carousel-content" class="projects-carousel-wrapper">
-                    <!-- Partners logos will be injected here by JavaScript -->
+                    <!-- JS Injected Content -->
                 </div>
             </div>
-
             <div class="credits">
                 <p>Developed by NeuraSoft | Contact: <a href="mailto:neurasoftware@gmail.com">neurasoftware@gmail.com</a></p>
                 <p>UI and Web Architecture R&D by <b>Team Aspiring</b></p>
-                 <!--<p id="last-updated-time"></p> Placeholder for last updated time -->
-                 <small>Last Updated: 02:21:55[hh:mm:ss] <br>
-                         Date: 08/05/2025[mm/dd/yyyy] by <b>012235</b></small>
+                 <small id="last-updated-time">Last Updated: initializing...</small>
                 <p>© 2025 TeenX Bangladesh. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Download Modal -->
+    <!-- Modals -->
     <div id="download-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">×</span>
             <h2 id="download-modal-title">Download TeenX App</h2>
             <p id="download-modal-message">Ready to join the community? Choose your download option below.</p>
-            
             <div id="download-options" class="modal-buttons">
-                <button id="start-apk-download" class="cta-button">Download APK (Approx. 25MB)</button>
-                <a href="https://play.google.com/store/apps/details?id=your.app.id" target="_blank" class="cta-button secondary">Get it on Google Play</a>
+                <a href="Assets/App/TeenXApp.apk" download id="start-apk-download" class="cta-button">Download APK (Approx. 25MB)</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="cta-button secondary">Get it on Google Play</a>
             </div>
-
             <div id="download-progress-container" class="progress-container" style="display: none;">
                 <p>Downloading TeenX...</p>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 0%;"></div>
+                    <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
                 </div>
                 <p id="download-percentage">0%</p>
             </div>
-
             <div id="download-complete-message" style="display: none;">
                 <h3 class="text-green-600">Download Complete!</h3>
                 <p>Thank you for downloading TeenX. The download should start automatically.</p>
@@ -1694,7 +1464,6 @@
         </div>
     </div>
     
-    <!-- Join Modal -->
     <div id="join-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">×</span>
@@ -1702,6 +1471,7 @@
             <p>Enter your details to receive updates and exclusive community invites!</p>
             <form name="join-us" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="join-form">
                 <p style="display: none;"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
+                <input type="hidden" name="form-name" value="join-us">
                 <div class="form-group">
                     <label for="join-name">Your Name</label>
                     <input type="text" id="join-name" name="name" placeholder="Your Name" required>
@@ -1718,12 +1488,11 @@
                     <label for="join-age">Your Age</label>
                     <input type="number" id="join-age" name="age" placeholder="Your Age" required>
                 </div>
-                <button type="submit" class="cta-button">Submit</button>
+                <button type="submit" class="cta-button">Join</button>
             </form>
         </div>
     </div>
     
-    <!-- Thanks Modal -->
     <div id="thanks-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">×</span>
@@ -1741,504 +1510,344 @@
             <div class="chat-bubble" id="chat-bubble-text"></div>
             <button id="skip-tour-btn">Skip Tour</button>
         </div>
-        <img src="http://googleusercontent.com/file_content/1" alt="Guide Avatar" id="guide-avatar">
+        <img src="Assets/Ava/ava.webp" alt="Guide Avatar" id="guide-avatar" loading="lazy" decoding="async">
     </div>
-    <!-- END AVATAR GUIDE HTML -->
 
+    <script defer>
+    document.addEventListener("DOMContentLoaded", function() {
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Preloader Logic
-            window.addEventListener('load', () => {
-                const preloader = document.getElementById('preloader');
-                if (preloader) {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => { preloader.style.display = 'none'; }, 400);
-                }
-            });
+        // --- PRELOADER ---
+        const preloader = document.getElementById('preloader');
+        window.addEventListener('load', () => {
+            preloader.classList.add('hidden');
+        });
 
-            // Sticky Header Logic
-            const header = document.getElementById('header');
-            window.addEventListener('scroll', () => {
-                header.classList.toggle('sticky', window.scrollY > 50);
-            });
-
-            // Mobile Navigation Toggle
-            const hamburger = document.getElementById('hamburger');
-            const mobileNav = document.getElementById('mobile-nav');
-            const navLinks = document.querySelectorAll('#mobile-nav a');
-            const closeMobileNavButton = document.querySelector('.close-mobile-nav-button');
-            
-            function toggleMobileNav() {
-                hamburger.classList.toggle('open');
-                mobileNav.classList.toggle('open');
-                document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
-            }
-
-            hamburger.addEventListener('click', toggleMobileNav);
-            if (closeMobileNavButton) {
-                closeMobileNavButton.addEventListener('click', toggleMobileNav);
-            }
-            navLinks.forEach(link => {
-                link.addEventListener('click', toggleMobileNav);
-            });
-            mobileNav.addEventListener('click', (event) => {
-                if (event.target === mobileNav) {
-                    toggleMobileNav();
-                }
-            });
-            
-            // Scroll Reveal Animation Logic
-            const revealElements = document.querySelectorAll('.reveal');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.2 });
-
-            revealElements.forEach(el => { observer.observe(el); });
-
-            // --- ADVANCED AVATAR GUIDED TOUR LOGIC ---
-            const exploreBtn = document.getElementById('explore-btn');
-            const avatarContainer = document.getElementById('avatar-guide-container');
-            const chatBubbleText = document.getElementById('chat-bubble-text');
-            const skipTourBtn = document.getElementById('skip-tour-btn');
-            
-            let isTourRunning = false;
-            let tourTimeout;
-
-            const tourSteps = [
-                {
-                    target: '#hero',
-                    text: "Hi there! I'm here to show you around. Ready to see what TeenX is all about? Let's go!"
-                },
-                {
-                    target: '#activities',
-                    text: "Check this out! We have amazing campaign videos, fun activities, and you can see all the cool things our community is doing."
-                },
-                {
-                    target: '#testimonials',
-                    text: "Want to know what others think? Here are some stories from teens who are already part of the TeenX family. It's pretty awesome!"
-                },
-                {
-                    target: '#contact-us',
-                    text: "Got a question or an idea? We'd love to hear from you! You can reach our team using this form."
-                },
-                {
-                    target: '#cta-final',
-                    text: "And that brings us to the end! If you're excited to join, you can download the app or sign up here. Hope to see you in the community!"
-                }
-            ];
-            
-            function typeMessage(element, text, callback) {
-                let i = 0;
-                const speed = 40; // Typing speed in ms
-                element.innerHTML = '';
-                
-                function type() {
-                    if (i < text.length) {
-                        element.innerHTML += text.charAt(i);
-                        i++;
-                        tourTimeout = setTimeout(type, speed);
-                    } else {
-                        // Remove cursor after typing
-                        const cursor = element.querySelector('.typing-cursor');
-                        if (cursor) cursor.remove();
-                        if (callback) callback();
-                    }
-                }
-                
-                // Add cursor before typing
-                element.innerHTML = '<span class="typing-cursor"></span>';
-                type();
-            }
-
-            function endTour() {
-                clearTimeout(tourTimeout);
-                isTourRunning = false;
-                avatarContainer.classList.remove('visible');
-            }
-
-            function startGuidedTour() {
-                if (isTourRunning) return;
-                isTourRunning = true;
-                let currentStepIndex = 0;
-                avatarContainer.classList.add('visible');
-
-                function nextStep() {
-                    if (currentStepIndex >= tourSteps.length) {
-                        // End of tour
-                        typeMessage(chatBubbleText, "That's the tour! Feel free to explore on your own. Have a great time!", () => {
-                           tourTimeout = setTimeout(endTour, 4000);
-                        });
-                        skipTourBtn.style.display = 'none';
-                        return;
-                    }
-
-                    const step = tourSteps[currentStepIndex];
-                    const targetElement = document.querySelector(step.target);
-
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
-
-                        // Wait a bit for scroll to start before typing
-                        tourTimeout = setTimeout(() => {
-                            typeMessage(chatBubbleText, step.text, () => {
-                                // Wait after message is typed before moving to next step
-                                tourTimeout = setTimeout(() => {
-                                    currentStepIndex++;
-                                    nextStep();
-                                }, 2500); // Pause between steps
-                            });
-                        }, 1000); // Delay before typing
-                    }
-                }
-                
-                // Start the first step after the avatar appears
-                tourTimeout = setTimeout(nextStep, 500);
-            }
-
-            exploreBtn.addEventListener('click', startGuidedTour);
-            skipTourBtn.addEventListener('click', endTour);
-            // --- END AVATAR GUIDED TOUR LOGIC ---
-
-
-            // All Modal & Form Logic
-            const downloadButtons = document.querySelectorAll('[id^="download-btn"]');
-            const joinButtons = document.querySelectorAll('[id^="join-btn"]');
-            const downloadModal = document.getElementById('download-modal');
-            const joinModal = document.getElementById('join-modal');
-            const thanksModal = document.getElementById('thanks-modal');
-            const closeButtons = document.querySelectorAll('.close-button');
-            const allModals = document.querySelectorAll('.modal');
-            const contactForm = document.querySelector('.contact-form');
-            const joinForm = document.querySelector('.join-form');
-
-            // Elements for download progress
-            const startApkDownloadBtn = document.getElementById('start-apk-download');
-            const downloadOptions = document.getElementById('download-options');
-            const downloadProgressContainer = document.getElementById('download-progress-container');
-            const progressBarFill = document.querySelector('#download-progress-container .progress-bar-fill');
-            const downloadPercentage = document.getElementById('download-percentage');
-            const downloadCompleteMessage = document.getElementById('download-complete-message');
-            const downloadModalTitle = document.getElementById('download-modal-title');
-            const downloadModalMessage = document.getElementById('download-modal-message');
-
-
-            function showModal(modalElement) {
-                document.body.style.overflow = 'hidden';
-                modalElement.classList.add('active');
-            }
-
-            window.hideModals = function() {
-                allModals.forEach(modal => modal.classList.remove('active'));
-                document.body.style.overflow = '';
-            }
-            
-            function showThanksMessage(title, message) {
-                document.getElementById('thanks-title').textContent = title;
-                document.getElementById('thanks-message').textContent = message;
-                hideModals();
-                showModal(thanksModal);
-            }
-
-            // Function to reset download modal to initial state
-            function resetDownloadModal() {
-                downloadModalTitle.textContent = "Download TeenX App";
-                downloadModalMessage.textContent = "Ready to join the community? Choose your download option below.";
-                downloadOptions.style.display = 'flex'; // Show download options
-                downloadProgressContainer.style.display = 'none'; // Hide progress bar
-                downloadCompleteMessage.style.display = 'none'; // Hide complete message
-                progressBarFill.style.width = '0%'; // Reset progress bar
-                downloadPercentage.textContent = '0%'; // Reset percentage
-            }
-
-            // Override showModal for download to reset it first
-            const originalShowModal = window.showModal;
-            window.showModal = function(modalElement) {
-                if (modalElement && modalElement.id === 'download-modal') {
-                    resetDownloadModal(); // Reset the download modal before showing
-                }
-                if(modalElement) originalShowModal(modalElement);
-            };
-
-            // Event listeners for all download buttons to show the modal and trigger progress
-            downloadButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    hideModals();
-                    // Close mobile nav if it's open before showing modal
-                    if (mobileNav.classList.contains('open')) {
-                        toggleMobileNav(); 
-                    }
-                    showModal(downloadModal);
-                    // Automatically trigger the APK download process after modal is shown
-                    setTimeout(() => {
-                        startApkDownloadBtn.click(); // Programmatically click the internal download button
-                    }, 100); // Small delay to ensure modal is rendered
-                });
-            });
-
-            // Add event listener for the new download button inside the mobile frame
-            const downloadBtnHeroMobileFrame = document.getElementById('download-btn-hero-mobile-frame');
-            if (downloadBtnHeroMobileFrame) {
-                downloadBtnHeroMobileFrame.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    hideModals();
-                    // Close mobile nav if it's open before showing modal
-                    if (mobileNav.classList.contains('open')) {
-                        toggleMobileNav(); 
-                    }
-                    showModal(downloadModal);
-                    setTimeout(() => {
-                        startApkDownloadBtn.click();
-                    }, 100);
-                });
-            }
-            
-            joinButtons.forEach(button => {
-                button.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    hideModals();
-                    // Close mobile nav if it's open before showing modal
-                    if (mobileNav.classList.contains('open')) {
-                        toggleMobileNav(); 
-                    }
-                    hamburger.classList.remove('open');
-                    mobileNav.classList.remove('open');
-                    document.body.style.overflow = ''; // Ensure scroll is re-enabled
-                    showModal(joinModal);
-                });
-            });
-
-            closeButtons.forEach(button => {
-                button.addEventListener('click', hideModals);
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target.classList.contains('modal')) {
-                    hideModals();
-                }
-            });
-            
-            // Handle form submissions with Netlify
-            if(contactForm) {
-                contactForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    const myForm = event.target;
-                    const formData = new FormData(myForm);
-                    
-                    fetch("/", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: new URLSearchParams(formData).toString(),
-                    })
-                        .then(() => {
-                            showThanksMessage("Thank You!", "Dear, we're checking your message. We'll get back to you soon!");
-                            myForm.reset();
-                        })
-                        .catch((error) => console.error(error));
-                });
-            }
-            
-            if(joinForm) {
-                joinForm.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    const myForm = event.target;
-                    const formData = new FormData(myForm);
-                    
-                    fetch("/", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: new URLSearchParams(formData).toString(),
-                    })
-                        .then(() => {
-                            showThanksMessage("Thank You!", "Thanks for joining! We will notify you with the latest updates.");
-                            myForm.reset();
-                        })
-                        .catch((error) => console.error(error));
-                });
-            }
-            
-            function loadDynamicCarousel(containerId, wrapperClass, itemWrapperClass, imageClass, skeletonClass, basePath, prefix, count, fallbackImageUrl) {
-                const container = document.getElementById(containerId);
-                if (!container) return;
-
-                let imageSources = [];
-                for (let i = 1; i <= count; i++) {
-                    imageSources.push(`${basePath}/${prefix}${i}.png`);
-                }
-
-                const carouselWrapper = container;
-                const allPromises = imageSources.map(src => {
-                    return new Promise(resolve => {
-                        const img = new Image();
-                        img.src = src;
-                        img.onload = () => resolve(`<div class="${itemWrapperClass}"><img src="${src}" alt="${prefix}" class="${imageClass}" loading="lazy"></div>`);
-                        img.onerror = () => {
-                            resolve(fallbackImageUrl ? `<div class="${itemWrapperClass}"><img src="${fallbackImageUrl}" alt="Placeholder" class="${imageClass}" loading="lazy"></div>` : '');
-                        };
-                    });
-                });
-
-                Promise.all(allPromises).then(results => {
-                    const validImages = results.filter(html => html !== '');
-                    if (validImages.length === 0) {
-                        carouselWrapper.innerHTML = `<div class="${skeletonClass}"></div>`.repeat(count);
-                        carouselWrapper.style.animation = 'none';
-                        return;
-                    }
-
-                    carouselWrapper.innerHTML = (validImages.join('') + validImages.join(''));
-                });
-            }
-            
-            loadDynamicCarousel(
-                'campaign-carousel-content',
-                'campaign-carousel-wrapper',
-                'carousel-item-wrapper',
-                'campaign-img',
-                'skeleton-loader',
-                'Assets/Img',
-                'c',
-                6,
-                'https://placehold.co/300x150/e0e0e0/555555?text=Campaign'
-            );
-
-            loadDynamicCarousel(
-                'partners-carousel-content',
-                'projects-carousel-wrapper',
-                'carousel-item-wrapper',
-                'projects-carousel-img',
-                'projects-skeleton-loader',
-                'Assets/partner',
-                'p',
-                6,
-                'https://placehold.co/120x60/2e3a47/FFFFFF?text=Partner'
-            );
-            
-            // Testimonial Carousel Logic
-            const testimonialWrapper = document.querySelector('.testimonial-wrapper');
-            const testimonialCards = document.querySelectorAll('.testimonial-card');
-            let currentTestimonial = 0;
-
-            function showTestimonial(index) {
-                if (testimonialWrapper) {
-                    testimonialCards.forEach(card => card.classList.remove('active'));
-                    testimonialCards[index].classList.add('active');
-                    testimonialWrapper.style.transform = `translateX(-${index * 100}%)`;
-                }
-            }
-
-            if (testimonialWrapper && testimonialCards.length > 0) {
-                testimonialCards.forEach((card, index) => {
-                    if (index === 0) card.classList.add('active');
-                });
-
-                setInterval(() => {
-                    currentTestimonial = (currentTestimonial + 1) % testimonialCards.length;
-                    showTestimonial(currentTestimonial);
-                }, 5000);
-            }
-
-            // YouTube Video Play/Pause Logic
-            const videoOverlay = document.querySelector('.video-overlay');
-            let player;
-
-            const tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            const firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-            window.onYouTubeIframeAPIReady = function() {
-                if(document.getElementById('youtube-video')) {
-                    player = new YT.Player('youtube-video', {
-                        events: {
-                            'onReady': onPlayerReady,
-                            'onStateChange': onPlayerStateChange
-                        }
-                    });
-                }
-            }
-
-            function onPlayerReady(event) {
-                event.target.mute();
-                event.target.playVideo();
-                if(videoOverlay) videoOverlay.style.display = 'flex';
-            }
-
-            function onPlayerStateChange(event) {
-                const playButtonIcon = document.querySelector('.video-overlay .play-button');
-                const soundPromptText = document.querySelector('.video-overlay .sound-prompt');
-                if(!playButtonIcon || !soundPromptText) return;
-
-                if (event.data == YT.PlayerState.PLAYING) {
-                    if (!player.isMuted()) videoOverlay.style.display = 'none';
-                    playButtonIcon.classList.remove('fa-play');
-                    playButtonIcon.classList.add('fa-pause');
-                    soundPromptText.textContent = '';
-                } else {
-                    videoOverlay.style.display = 'flex';
-                    playButtonIcon.classList.remove('fa-pause');
-                    playButtonIcon.classList.add('fa-play');
-                    soundPromptText.textContent = player.isMuted() ? 'Tap to turn on sound' : 'Tap to play';
-                }
-            }
-
-            if(videoOverlay) {
-                videoOverlay.addEventListener('click', () => {
-                    if(!player) return;
-                    if (player.isMuted()) {
-                        player.unMute();
-                        videoOverlay.style.display = 'none';
-                    } else if (player.getPlayerState() == YT.PlayerState.PLAYING) {
-                        player.pauseVideo();
-                    } else {
-                        player.playVideo();
-                    }
-                });
-            }
-
-            // Download APK Logic
-            if(startApkDownloadBtn) {
-                startApkDownloadBtn.addEventListener('click', () => {
-                    if(downloadOptions) downloadOptions.style.display = 'none';
-                    if(downloadProgressContainer) downloadProgressContainer.style.display = 'block';
-                    if(downloadModalTitle) downloadModalTitle.textContent = "Downloading...";
-                    if(downloadModalMessage) downloadModalMessage.textContent = "Please wait while your download is prepared.";
-
-                    let progress = 0;
-                    const interval = setInterval(() => {
-                        progress += Math.floor(Math.random() * 15) + 5;
-                        if (progress > 100) progress = 100;
-                        
-                        if(progressBarFill) progressBarFill.style.width = `${progress}%`;
-                        if(downloadPercentage) downloadPercentage.textContent = `${progress}%`;
-
-                        if (progress === 100) {
-                            clearInterval(interval);
-                            if(downloadProgressContainer) downloadProgressContainer.style.display = 'none';
-                            if(downloadCompleteMessage) downloadCompleteMessage.style.display = 'block';
-                            if(downloadModalTitle) downloadModalTitle.textContent = "Download Started!";
-                            if(downloadModalMessage) downloadModalMessage.textContent = "";
-
-                            const downloadLink = document.createElement('a');
-                            downloadLink.href = 'Assets/App/TeenXApp.apk';
-                            downloadLink.download = 'TeenXApp.apk';
-                            document.body.appendChild(downloadLink);
-                            downloadLink.click();
-                            document.body.removeChild(downloadLink);
-                        }
-                    }, 300);
-                });
+        // --- STICKY HEADER ---
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('sticky');
+            } else {
+                header.classList.remove('sticky');
             }
         });
+
+        // --- MOBILE NAVIGATION ---
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobile-nav');
+        const mobileNavLinks = mobileNav.querySelectorAll('a');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+        });
+        
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileNav.classList.remove('open');
+            });
+        });
+
+        // --- MODAL HANDLING ---
+        const downloadModal = document.getElementById('download-modal');
+        const joinModal = document.getElementById('join-modal');
+        const thanksModal = document.getElementById('thanks-modal');
+        
+        const downloadButtons = [
+            document.getElementById('download-btn-header'),
+            document.getElementById('download-btn-hero'),
+            document.getElementById('download-btn-hero-mobile-frame'),
+            document.getElementById('download-btn-final')
+        ];
+
+        const joinButtons = [
+            document.getElementById('join-btn-hero'),
+            document.getElementById('join-btn-final')
+        ];
+
+        const closeButtons = document.querySelectorAll('.close-button');
+
+        function showModal(modal) {
+            modal.classList.add('active');
+        }
+
+        window.hideModals = function() {
+            [downloadModal, joinModal, thanksModal].forEach(modal => modal.classList.remove('active'));
+            resetDownloadModal();
+        }
+
+        downloadButtons.forEach(btn => btn.addEventListener('click', () => showModal(downloadModal)));
+        joinButtons.forEach(btn => btn.addEventListener('click', () => showModal(joinModal)));
+        closeButtons.forEach(btn => btn.addEventListener('click', hideModals));
+        
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                hideModals();
+            }
+        });
+
+        // --- APK DOWNLOAD SIMULATION ---
+        const startApkDownloadBtn = document.getElementById('start-apk-download');
+        const downloadProgressContainer = document.getElementById('download-progress-container');
+        const downloadOptions = document.getElementById('download-options');
+        const downloadCompleteMessage = document.getElementById('download-complete-message');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const downloadPercentage = document.getElementById('download-percentage');
+
+        function resetDownloadModal() {
+            downloadOptions.style.display = 'flex';
+            downloadProgressContainer.style.display = 'none';
+            downloadCompleteMessage.style.display = 'none';
+            progressBarFill.style.width = '0%';
+            downloadPercentage.textContent = '0%';
+        }
+
+        startApkDownloadBtn.addEventListener('click', (e) => {
+            // This is a simulation. For a real download, the href attribute handles it.
+            // We show the progress bar for visual feedback.
+            e.preventDefault(); 
+            
+            downloadOptions.style.display = 'none';
+            downloadProgressContainer.style.display = 'block';
+
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 10) + 1;
+                if (progress > 100) progress = 100;
+
+                progressBarFill.style.width = progress + '%';
+                downloadPercentage.textContent = progress + '%';
+
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        downloadProgressContainer.style.display = 'none';
+                        downloadCompleteMessage.style.display = 'block';
+                        // Trigger actual download after simulation
+                        window.location.href = e.target.href; 
+                    }, 500);
+                }
+            }, 200);
+        });
+
+        // --- FORM SUBMISSION (NETLIFY) ---
+        const handleFormSubmit = (event) => {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                hideModals();
+                const thanksTitle = document.getElementById('thanks-title');
+                const thanksMessage = document.getElementById('thanks-message');
+                if (form.name === 'contact') {
+                    thanksTitle.textContent = "Message Sent!";
+                    thanksMessage.textContent = "Thanks for reaching out. We'll get back to you soon!";
+                } else {
+                    thanksTitle.textContent = "Welcome Aboard!";
+                    thanksMessage.textContent = "Thank you for joining the TeenX community! We'll keep you updated.";
+                }
+                showModal(thanksModal);
+                form.reset();
+            })
+            .catch(error => alert(error));
+        };
+
+        document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
+            form.addEventListener('submit', handleFormSubmit);
+        });
+
+        // --- SCROLL REVEAL ANIMATIONS ---
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // --- TESTIMONIAL CAROUSEL ---
+        const testimonialWrapper = document.querySelector('.testimonial-wrapper');
+        const testimonials = document.querySelectorAll('.testimonial-card');
+        let currentTestimonial = 0;
+
+        function showTestimonial(index) {
+            testimonials.forEach((card, i) => {
+                card.classList.toggle('active', i === index);
+            });
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+
+        if (testimonials.length > 0) {
+            showTestimonial(0); // Show the first one initially
+            setInterval(nextTestimonial, 5000); // Change every 5 seconds
+        }
+
+        // --- DYNAMIC CAROUSELS (CAMPAIGNS & PARTNERS) ---
+        const campaignData = [
+            { src: 'Assets/Img/c1.webp', alt: 'Community Meetup' },
+            { src: 'Assets/Img/c2.webp', alt: 'Online Workshop' },
+            { src: 'Assets/Img/c3.webp', alt: 'Awareness Drive' },
+            // { src: 'Assets/Img/c4.webp', alt: 'Skill Development' },
+            // { src: 'Assets/Img/c5.webp', alt: 'Tech for Good' },
+            // { src: 'Assets/Img/c6.webp', alt: 'Leadership Program' }
+        ];
+
+        const partnerData = [
+            { src: 'Assets/partner/p1.webp', alt: 'Partner 1' },
+            { src: 'Assets/partner/p2.webp', alt: 'Partner 2' },
+            { src: 'Assets/partner/p3.webp', alt: 'Partner 3' },
+            { src: 'Assets/partner/p4.webp', alt: 'Partner 4' },
+            { src: 'Assets/partner/p5.webp', alt: 'Partner 5' },
+            { src: 'Assets/partner/p6.webp', alt: 'Partner 6' }
+        ];
+
+        function populateCarousel(containerId, data, skeletonClass) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            let content = data.map(item => `
+                <div class="carousel-item-wrapper">
+                    <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async" onerror="this.style.display='none'">
+                </div>
+            `).join('');
+            
+            // Duplicate content for infinite scroll effect
+            container.innerHTML = content + content;
+        }
+
+        populateCarousel('campaign-carousel-content', campaignData, 'skeleton-loader');
+        populateCarousel('partners-carousel-content', partnerData, 'projects-skeleton-loader');
+
+        // --- YOUTUBE VIDEO CONTROL ---
+        const videoOverlay = document.querySelector('.video-overlay');
+        let player;
+
+        window.onYouTubeIframeAPIReady = function() {
+            player = new YT.Player('youtube-video', {});
+        };
+        
+        videoOverlay.addEventListener('click', () => {
+            if (typeof player !== 'undefined' && typeof player.unMute === 'function') {
+                player.unMute();
+                player.playVideo();
+                videoOverlay.classList.add('hidden');
+            }
+        });
+        
+        // Load the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // --- AVATAR GUIDE ---
+        const avatarContainer = document.getElementById('avatar-guide-container');
+        const chatBubble = document.getElementById('chat-bubble-text');
+        const skipTourBtn = document.getElementById('skip-tour-btn');
+        const exploreLink = document.getElementById('explore-link');
+        let tourTimeout;
+        let tourStarter;
+        let currentStep = 0;
+
+        const tourSteps = [
+            { text: "Welcome to TeenX! I'm here to guide you. Let's explore our key features.", delay: 4000 },
+            { text: "This section highlights our core safety and community features within the app.", element: '.activity-row', delay: 5000 },
+            { text: "See what other teens are saying about their experience with us.", element: '#testimonials', delay: 5000 },
+            { text: "Ready to join? Download the app or join our community from here!", element: '#cta-final', delay: 5000 },
+            { text: "Thanks for taking the tour! Feel free to reach out if you have any questions.", delay: 5000 }
+        ];
+
+        function typeMessage(text, onComplete) {
+            let i = 0;
+            chatBubble.innerHTML = '';
+            const typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    chatBubble.innerHTML += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                    if (onComplete) onComplete();
+                }
+            }, 30);
+        }
+        
+        function runTour() {
+            if (currentStep >= tourSteps.length) {
+                avatarContainer.classList.remove('visible');
+                return;
+            }
+            
+            const step = tourSteps[currentStep];
+            
+            if (step.element) {
+                const targetElement = document.querySelector(step.element);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+            
+            typeMessage(step.text, () => {
+                tourTimeout = setTimeout(runTour, step.delay);
+            });
+            
+            currentStep++;
+        }
+
+        function startTour() {
+            clearTimeout(tourStarter);
+            clearTimeout(tourTimeout);
+            
+            currentStep = 0;
+            avatarContainer.classList.add('visible');
+            runTour();
+        }
+
+        tourStarter = setTimeout(() => {
+             if(sessionStorage.getItem('tourSkipped') !== 'true') {
+                startTour();
+             }
+        }, 3000);
+
+        skipTourBtn.addEventListener('click', () => {
+            clearTimeout(tourStarter);
+            clearTimeout(tourTimeout);
+            avatarContainer.classList.remove('visible');
+            sessionStorage.setItem('tourSkipped', 'true');
+        });
+        
+        exploreLink.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            startTour();
+        });
+        
+        // --- UPDATE FOOTER DATE/TIME ---
+        function updateTime() {
+            const timeElement = document.getElementById('last-updated-time');
+            if(timeElement) {
+                const now = new Date();
+                const formattedDate = now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+                timeElement.innerHTML = `Last Updated: ${formattedTime} [hh:mm:ss] <br> Date: ${formattedDate} [mm/dd/yyyy] by <b>012235</b>`;
+            }
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+    });
     </script>
 </body>
 </html>
