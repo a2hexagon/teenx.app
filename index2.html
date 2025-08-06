@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeenX Interactive Mobile UI</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" xintegrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0V4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Define CSS variables for consistent theming */
+        :root {
+            --red-primary: #e74c3c; /* Main background color */
+            --red-dark: #c0392b; /* SOS button background */
+            --orange: #f39c12; /* Alerts card color */
+            --blue: #3498db; /* Safe Zone card color */
+            --purple: #9b59b6; /* Reports card color */
+            --green: #2ecc71; /* Tips card color */
+            --dark-gray: #34495e; /* Navigation bar background */
+            --light-gray: #ecf0f1; /* Navigation item text color */
+            --white: #ffffff; /* General text and card background */
+            --notification-bg: rgba(0, 0, 0, 0.8); /* Notification bar background */
+            --notification-text: #fff; /* Notification text color */
+        }
+
+        /* Basic body styling to center the phone container for demonstration */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5; /* Light background for the overall page */
+        }
+
+        .phone-container {
+            width: 360px; /* Standard phone screen width */
+            height: 720px; /* Standard phone screen height */
+            background-color: var(--dark-gray);
+            border-radius: 40px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Crucial to contain internal elements */
+            position: relative;
+            border: 10px solid #222; /* Simulated phone bezel */
+        }
+
+        /* Simulated phone notch/speaker area */
+        .phone-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 25px;
+            background-color: #222;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            z-index: 10;
+        }
+
+        /* Simulated home indicator at the bottom */
+        .phone-container::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 5px;
+            background-color: #222;
+            border-radius: 5px;
+        }
+
+        /* Main application screen area */
+        .app-screen {
+            flex-grow: 1;
+            background-color: var(--red-primary);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-top: 25px; /* Space for notch */
+        }
+
+        /* Top header bar of the app */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: bold;
+            z-index: 5;
+        }
+
+        .header .icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* SOS button styling */
+        .sos-button {
+            background-color: var(--red-dark);
+            color: var(--white);
+            padding: 15px 20px;
+            margin: 20px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .sos-button:active {
+            background-color: #a02c20;
+        }
+
+        /* Grid layout for feature cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            padding: 0 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Individual feature card styling */
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .feature-card:active {
+            transform: scale(0.95);
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .feature-card span {
+            font-weight: 500;
+        }
+        
+        /* Specific background colors for each feature card */
+        .feature-card.alerts { background-color: rgba(243, 156, 18, 0.7); }
+        .feature-card.safe-zone { background-color: rgba(52, 152, 219, 0.7); }
+        .feature-card.reports { background-color: rgba(155, 89, 182, 0.7); }
+        .feature-card.tips { background-color: rgba(46, 204, 113, 0.7); }
+
+        /* Information card styling */
+        .info-card {
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 0 20px 20px;
+            color: var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Bottom navigation bar */
+        .nav-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: var(--dark-gray);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 5;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--light-gray);
+            font-size: 0.75rem;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 10px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-item.active {
+            color: var(--blue);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        /* Notification Bar: Positioned absolutely at the top, initially hidden */
+        .notification-bar {
+            position: absolute;
+            top: -100px; /* Hidden above the screen */
+            left: 0;
+            width: 100%;
+            background-color: var(--notification-bg);
+            color: var(--notification-text);
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            transition: top 0.3s ease-out, transform 0.3s ease-out; /* Smooth slide in/out */
+            z-index: 100;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: grab;
+        }
+
+        .notification-bar.show {
+            top: 0; /* Visible at the top */
+        }
+
+        .notification-bar .icon {
+            font-size: 1.5rem;
+            color: var(--blue);
+        }
+
+        .notification-bar .content {
+            flex-grow: 1;
+        }
+        
+        /* Modal / Popup Styles */
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(3px);
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal-overlay.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--white);
+            color: #333;
+            padding: 25px;
+            border-radius: 20px;
+            width: 85%;
+            max-width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.show .modal {
+            transform: scale(1);
+        }
+
+        .modal .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: var(--dark-gray);
+        }
+
+        .modal p {
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        #download-button {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--blue);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        #download-button:hover {
+            background-color: #2980b9;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none; /* Hidden by default */
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--green);
+            border-radius: 10px;
+            transition: width 0.2s linear;
+        }
+        
+        #thank-you-message {
+            text-align: center;
+            font-weight: bold;
+            color: var(--green);
+            display: none; /* Hidden by default */
+        }
+    </style>
+</head>
+<body>
+    <!-- Main container for the simulated phone device -->
+    <div class="phone-container">
+        <!-- The actual app screen content -->
+        <div class="app-screen">
+            <!-- App Header -->
+            <div class="header">
+                <i class="fas fa-bars icon" onclick="showNotification('Menu Clicked', 'This would open the side menu.')"></i>
+                <span>TeenX</span>
+                <i class="fas fa-sign-out-alt icon" onclick="showNotification('Logout', 'You have been logged out.')"></i>
+            </div>
+
+            <!-- SOS Button: Prominent call to action -->
+            <div class="sos-button" onclick="showNotification('SOS Activated!', 'Emergency contacts have been notified.')">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>SOS</span>
+            </div>
+
+            <!-- Feature Grid: Interactive buttons for different app sections -->
+            <div class="feature-grid">
+                <!-- Data attributes store modal content for each card -->
+                <div class="feature-card alerts" data-modal-title="Alerts Feature" data-modal-message="View and manage safety alerts from your community. Download the latest alert summary report below.">
+                    <i class="fas fa-bell"></i>
+                    <span>Alerts</span>
+                </div>
+                <div class="feature-card safe-zone" data-modal-title="Safe Zone" data-modal-message="Define your safe zones and get notified when you enter or leave them. You can download your zone configuration.">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Safe Zone</span>
+                </div>
+                <div class="feature-card reports" data-modal-title="Incident Reports" data-modal-message="Submit and track incident reports anonymously. Your privacy is our priority. Download a template for detailed reporting.">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Reports</span>
+                </div>
+                <div class="feature-card tips" data-modal-title="Safety Tips" data-modal-message="Access a library of safety tips and resources to stay informed and secure. Download our complete safety guide.">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Tips</span>
+                </div>
+            </div>
+
+            <!-- Information Card -->
+            <div class="info-card">
+                <p><strong>Current Location:</strong> Dhaka, Bangladesh</p>
+                <p><strong>Last Alert:</strong> No new alerts</p>
+                <p><strong>Safety Tip:</strong> Trust your instincts. If a situation feels unsafe, it probably is.</p>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation Bar -->
+        <div class="nav-bar">
+            <div class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Community</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-book-open"></i>
+                <span>Blog</span>
+            </div>
+        </div>
+
+        <!-- Notification Bar: This element slides down from the top -->
+        <div id="notification-bar" class="notification-bar">
+            <i class="fas fa-info-circle icon"></i>
+            <div class="content">
+                <strong id="notification-title"></strong>
+                <span id="notification-message"></span>
+            </div>
+        </div>
+
+        <!-- Modal / Popup -->
+        <div id="modal-overlay" class="modal-overlay">
+            <div id="modal" class="modal">
+                <button class="close-button" id="modal-close-button">&times;</button>
+                <h3 id="modal-title"></h3>
+                <p id="modal-message"></p>
+                <div id="modal-action-area">
+                    <button id="download-button">Download</button>
+                    <div class="progress-container" id="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <p id="thank-you-message">Thanks for downloading!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elements ---
+            const featureCards = document.querySelectorAll('.feature-card');
+            const notificationBar = document.getElementById('notification-bar');
+            const notificationTitle = document.getElementById('notification-title');
+            const notificationMessage = document.getElementById('notification-message');
+
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalCloseButton = document.getElementById('modal-close-button');
+            const downloadButton = document.getElementById('download-button');
+            const progressContainer = document.getElementById('progress-container');
+            const progressBar = document.getElementById('progress-bar');
+            const thankYouMessage = document.getElementById('thank-you-message');
+
+            // --- Notification Logic ---
+            let notificationTimeout;
+            
+            // Global function to show notifications (used by inline onclicks too)
+            window.showNotification = (title, message) => {
+                clearTimeout(notificationTimeout); // Clear any existing timer
+                notificationTitle.textContent = title;
+                notificationMessage.textContent = message;
+                
+                // Reset styles for re-triggering
+                notificationBar.style.transform = 'translateX(0)';
+                notificationBar.style.transition = 'top 0.3s ease-out, transform 0.3s ease-out';
+                notificationBar.classList.add('show');
+
+                // Auto-hide after 5 seconds
+                notificationTimeout = setTimeout(hideNotification, 5000);
+            }
+
+            function hideNotification() {
+                notificationBar.classList.remove('show');
+            }
+            
+            // --- Modal Logic ---
+            function showModal(title, message) {
+                modalTitle.textContent = title;
+                modalMessage.textContent = message;
+
+                // Reset modal state
+                downloadButton.style.display = 'block';
+                progressContainer.style.display = 'none';
+                thankYouMessage.style.display = 'none';
+                progressBar.style.width = '0%';
+                
+                modalOverlay.classList.add('show');
+            }
+
+            function hideModal() {
+                modalOverlay.classList.remove('show');
+            }
+
+            featureCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const title = card.dataset.modalTitle;
+                    const message = card.dataset.modalMessage;
+                    showModal(title, message);
+                });
+            });
+
+            modalCloseButton.addEventListener('click', hideModal);
+            modalOverlay.addEventListener('click', (e) => {
+                if (e.target === modalOverlay) {
+                    hideModal();
+                }
+            });
+
+            // --- Download Simulation Logic ---
+            downloadButton.addEventListener('click', () => {
+                downloadButton.style.display = 'none';
+                progressContainer.style.display = 'block';
+                
+                let width = 0;
+                const interval = setInterval(() => {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        progressContainer.style.display = 'none';
+                        thankYouMessage.style.display = 'block';
+                    } else {
+                        width++;
+                        progressBar.style.width = width + '%';
+                    }
+                }, 20); // 20ms interval for a smooth 2-second progress
+            });
+
+            // --- Notification Swipe Logic ---
+            let startY, currentY, startX, currentX;
+            let isSwiping = false;
+            let swipeDirection = ''; // 'vertical' or 'horizontal'
+
+            notificationBar.addEventListener('touchstart', (e) => {
+                if (!notificationBar.classList.contains('show')) return;
+                startY = e.touches[0].clientY;
+                startX = e.touches[0].clientX;
+                isSwiping = true;
+                swipeDirection = ''; // Reset direction
+                notificationBar.style.transition = 'none'; // Disable transition for direct control
+            }, { passive: true });
+
+            notificationBar.addEventListener('touchmove', (e) => {
+                if (!isSwiping) return;
+
+                currentY = e.touches[0].clientY;
+                currentX = e.touches[0].clientX;
+                const deltaY = currentY - startY;
+                const deltaX = currentX - startX;
+
+                // Determine swipe direction on first significant movement
+                if (swipeDirection === '') {
+                    if (Math.abs(deltaY) > 10 && Math.abs(deltaY) > Math.abs(deltaX)) {
+                        swipeDirection = 'vertical';
+                    } else if (Math.abs(deltaX) > 10) {
+                        swipeDirection = 'horizontal';
+                    }
+                }
+
+                if (swipeDirection === 'vertical') {
+                    // Only allow swiping up (negative deltaY)
+                    if (deltaY < 0) {
+                        notificationBar.style.top = `${deltaY}px`;
+                    }
+                } else if (swipeDirection === 'horizontal') {
+                    notificationBar.style.transform = `translateX(${deltaX}px)`;
+                }
+            }, { passive: true });
+
+            notificationBar.addEventListener('touchend', () => {
+                if (!isSwiping) return;
+                isSwiping = false;
+                notificationBar.style.transition = 'top 0.3s ease-out, transform 0.3s ease-out';
+
+                const deltaY = currentY - startY;
+                const deltaX = currentX - startX;
+
+                if (swipeDirection === 'vertical') {
+                    // If swiped up enough, hide it
+                    if (deltaY < -40) {
+                        hideNotification();
+                    } else {
+                        // Otherwise, snap back to the top
+                        notificationBar.style.top = '0px';
+                    }
+                } else if (swipeDirection === 'horizontal') {
+                    // If swiped horizontally enough, dismiss it
+                    if (Math.abs(deltaX) > 80) {
+                        // Animate it off-screen
+                        notificationBar.style.transform = `translateX(${deltaX > 0 ? '100%' : '-100%'})`;
+                        // After animation, properly hide it
+                        notificationBar.addEventListener('transitionend', hideNotification, { once: true });
+                    } else {
+                        // Otherwise, snap back to center
+                        notificationBar.style.transform = 'translateX(0)';
+                    }
+                }
+                
+                // Clear any auto-hide timer if user interacts
+                clearTimeout(notificationTimeout);
+            });
+        });
+    </script>
+</body>
+</html>
