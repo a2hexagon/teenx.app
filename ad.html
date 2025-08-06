@@ -7,10 +7,12 @@
     <link rel="icon" href="Assets/logo/logo.webp">
     <title>TeenX Bangladesh</title>
 
+    <!-- Resource Hints for faster connection -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
+    <!-- Preload critical assets for faster loading -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
         as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="Assets/Ui/ui-2.webp" as="image" type="image/webp">
@@ -18,6 +20,7 @@
     <link rel="preload" href="Assets/Ava/ava.webp" as="image" type="image/webp">
 
 
+    <!-- Schema.org for SEO -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -40,6 +43,7 @@
     }
     </script>
 
+    <!-- Google Font & Font Awesome Icons -->
     <noscript>
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
@@ -410,38 +414,56 @@
             box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
         }
 
-        /* --- NEW: Shiny Simulation Button --- */
+        /* --- NEW: ATTRACTIVE GOLDEN SIMULATION BUTTON --- */
         #sim-btn-mobile-frame {
             position: absolute;
             bottom: 7rem;
-            /* Positioning above the download button */
             left: 50%;
             transform: translateX(-50%);
             width: 80%;
             padding: 1rem;
             font-size: 1.2rem;
+            font-weight: 600; /* Bolder text */
             z-index: 10;
-            border: none;
+            border: 2px solid transparent; /* Border to house the gradient */
+            border-radius: 9999px; /* Match other buttons */
             cursor: pointer;
             text-align: center;
-            /* For the <a> tag */
             color: var(--white);
-            /* Shiny gradient effect */
-            background: linear-gradient(45deg, #f1c40f, #f39c12, #e67e22);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3); /* Add depth to text */
+            
+            /* Golden Gradient Background */
+            background: linear-gradient(45deg, #FFC700, #FFD700, #FFA500, #FFD700);
             background-size: 400% 400%;
-            animation: explore-gradient 5s ease infinite;
-            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.35);
+            
+            /* Pulsing Glow Animation */
+            animation: pulseGlow 4s ease-in-out infinite, explore-gradient 10s ease infinite;
+            
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            /* Inherits cta-button styles, adding specifics here */
+            overflow: hidden; /* Important for the shine effect */
+        }
+
+        /* The Shine/Sparkle Pseudo-element */
+        #sim-btn-mobile-frame::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent,
+                rgba(255, 255, 255, 0.6),
+                transparent 30%
+            );
+            animation: rotateShine 4s linear infinite;
         }
 
         #sim-btn-mobile-frame:hover {
             color: var(--white);
-            transform: translateX(-50%) translateY(-3px);
-            /* Adjusted transform */
-            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.5);
+            transform: translateX(-50%) translateY(-3px) scale(1.03); /* Enhanced hover effect */
+            box-shadow: 0 0 25px #FFD700, 0 0 40px #FFA500; /* Brighter glow on hover */
         }
-
 
         @keyframes explore-gradient {
             0% {
@@ -454,6 +476,29 @@
 
             100% {
                 background-position: 0% 50%;
+            }
+        }
+        
+        /* Keyframes for the rotating shine */
+        @keyframes rotateShine {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Keyframes for the pulsing golden glow */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 5px #FFD700, 0 0 10px #FFA500, inset 0 0 5px rgba(255, 223, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 15px #FFD700, 0 0 25px #FFA500, inset 0 0 10px rgba(255, 223, 0, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 5px #FFD700, 0 0 10px #FFA500, inset 0 0 5px rgba(255, 223, 0, 0.5);
             }
         }
 
@@ -1472,6 +1517,7 @@
 </head>
 
 <body>
+    <!-- Notice Board -->
     <div class="notice-board">
         <marquee behavior="scroll" direction="left" scrollamount="5">
             A Project Of <a style="color:white" href="https://startupio.org" target="_blank"
@@ -1530,14 +1576,17 @@
                 </div>
                 <div class="hero-image">
                     <div class="hero-image-frames">
+                        <!-- This frame is for mobile view -->
                         <div class="phone-frame single-frame">
                             <img src="Assets/Ui/ui-2.webp" alt="App UI" class="mockup-img" decoding="async">
 
+                            <!-- --- MODIFIED: Added Shiny Simulation Button and kept Download Button --- -->
                             <a href="appsim.html" id="sim-btn-mobile-frame" class="cta-button">Try TeenX Simulation</a>
                             
                             <button id="download-btn-hero-mobile-frame"
                                 class="cta-button download-btn-mobile-frame">Download TeenX</button>
                         </div>
+                        <!-- These frames are for desktop view -->
                         <div class="phone-frame left-frame">
                             <img src="Assets/Ui/ui-1.webp" alt="App UI 1" class="mockup-img" loading="lazy"
                                 decoding="async">
@@ -1572,7 +1621,8 @@
                 <div class="campaign-carousel-container">
                     <h3 class="reveal">Our Campaigns in Action</h3>
                     <div id="campaign-carousel-content" class="campaign-carousel-wrapper">
-                        </div>
+                        <!-- JS Injected Content -->
+                    </div>
                 </div>
 
                 <div class="activity-row">
@@ -1702,7 +1752,8 @@
             <div class="projects-carousel-container">
                 <h3>Our Partners</h3>
                 <div id="partners-carousel-content" class="projects-carousel-wrapper">
-                    </div>
+                    <!-- JS Injected Content -->
+                </div>
             </div>
             <div class="credits">
                 <p>Developed by NeuraSoft | Contact: <a
@@ -1714,6 +1765,7 @@
         </div>
     </footer>
 
+    <!-- Modals -->
     <div id="download-modal" class="modal">
         <div class="modal-content">
             <span class="close-button">×</span>
@@ -1781,6 +1833,7 @@
         </div>
     </div>
 
+    <!-- AVATAR GUIDE HTML -->
     <div id="avatar-guide-container" class="avatar-guide-container">
         <div class="chat-bubble-wrapper">
             <div class="chat-bubble" id="chat-bubble-text"></div>

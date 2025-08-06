@@ -1980,9 +1980,13 @@
                         if (form.name === 'contact') {
                             thanksTitle.textContent = "Message Sent!";
                             thanksMessage.textContent = "Thanks for reaching out. We'll get back to you soon!";
-                        } else {
+                        } else if(form.name== 'join-us'){
                             thanksTitle.textContent = "Welcome Aboard!";
                             thanksMessage.textContent = "Thank you for joining the TeenX community! We'll keep you updated.";
+                        }else{
+                                    thanksTitle.textContent = "Success!";
+                            thanksMessage.textContent = "Thank you! We'll keep you updated.";
+                    
                         }
                         showModal(thanksModal);
                         form.reset();
