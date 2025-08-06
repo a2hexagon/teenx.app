@@ -1759,7 +1759,7 @@
                 <p>Developed by NeuraSoft | Contact: <a
                         href="mailto:neurasoftware@gmail.com">neurasoftware@gmail.com</a></p>
                 <p>UI and Web Architecture R&D by <b>Team Aspiring</b></p>
-                <small id="last-updated-time">Last Updated: 19:58:44 [hh:mm:ss] | Date: 08/06/2025[mm:dd:yyyy]  by <b>012235</b> </small>
+                <small id="last-updated-time">Last Updated: initializing...</small>
                 <p>© 2025 TeenX Bangladesh. All Rights Reserved.</p>
             </div>
         </div>
@@ -2165,18 +2165,18 @@
             });
 
             // --- UPDATE FOOTER DATE/TIME ---
-        //     function updateTime() {
-        //         const timeElement = document.getElementById('last-updated-time');
-        //         if (timeElement) {
-        //             const now = new Date();
-        //             const formattedDate = now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
-        //             const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
-        //             timeElement.innerHTML = `Last Updated: ${formattedTime} [hh:mm:ss] <br> Date: ${formattedDate} [mm/dd/yyyy] by <b>012235</b>`;
-        //         }
-        //     }
-        //     setInterval(updateTime, 1000);
-        //     updateTime();
-        // });
+            function updateTime() {
+                const timeElement = document.getElementById('last-updated-time');
+                if (timeElement) {
+                    const now = new Date();
+                    const formattedDate = now.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+                    timeElement.innerHTML = `Last Updated: ${formattedTime} [hh:mm:ss] <br> Date: ${formattedDate} [mm/dd/yyyy] by <b>012235</b>`;
+                }
+            }
+            setInterval(updateTime, 1000);
+            updateTime();
+        });
     </script>
 </body>
 
