@@ -1686,7 +1686,7 @@
                 <h2>Contact Us</h2>
                 <div class="contact-form-container">
                     <form name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field"
-                        class="contact-form reveal">
+                        class="contact-form reveal" action="/">
                         <p style="display: none;"><label>Don’t fill this out if you’re human: <input
                                     name="bot-field" /></label></p>
                         <input type="hidden" name="form-name" value="contact">
@@ -1799,7 +1799,7 @@
             <span class="close-button">×</span>
             <h2>Join TeenX Bangladesh</h2>
             <p>Enter your details to receive updates and exclusive community invites!</p>
-            <form name="join-us" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="join-form">
+            <form name="join-us" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="join-form" action="/">
                 <p style="display: none;"><label>Don’t fill this out if you’re human: <input name="bot-field" /></label>
                 </p>
                 <input type="hidden" name="form-name" value="join-us">
@@ -1969,8 +1969,8 @@
                 const form = event.target;
                 const formData = new FormData(form);
 
-                // Crucial for Netlify: append the form's name to the FormData
-                formData.append("form-name", form.getAttribute("name"));
+                // The hidden input 'form-name' is already in the HTML, no need to append it again here.
+                // formData.append("form-name", form.getAttribute("name"));
 
                 fetch("/", {
                         method: "POST",
