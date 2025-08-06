@@ -235,8 +235,13 @@
 
         #header nav ul {
             list-style: none;
-            display: flex;
-            gap: 2rem;
+              display: flex; /* Ensure nav is a flex container for its items */
+            align-items: center;
+            gap: 2rem; /* Existing gap for nav items */
+            margin: 0 auto; /* Center the nav between logo and download button */
+            flex-grow: 1; /* Allow nav to take up available space for centering */
+            justify-content: center; /* Center nav items within nav */
+       
         }
 
         #download-btn-header {
