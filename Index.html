@@ -1964,44 +1964,50 @@
             });
 
             // --- FORM SUBMISSION (NETLIFY) ---
-            // Helper for showing the thanks modal
-            function showThanksMessage(title, message) {
-                const thanksTitle = document.getElementById('thanks-title');
-                const thanksMessage = document.getElementById('thanks-message');
-                thanksTitle.textContent = title;
-                thanksMessage.textContent = message;
-                showModal(thanksModal);
-            }
+            const handleFormSubmit = (event) => {
+                event.preventDefault();
+                const form = event.target;
+                const formData = new FormData(form);
 
-            // Attach Netlify AJAX handler to all forms with data-netlify="true"
-            document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
-                form.addEventListener('submit', function(event) {
-                    event.preventDefault();
-                    const myForm = event.target;
-                    const formData = new FormData(myForm);
+                // Crucial for Netlify: append the form's name to the FormData
+                formData.append("form-name", form.getAttribute("name"));
 
-                    // Ensure Netlify form-name is present in POST body
-                    formData.append("form-name", myForm.getAttribute("name"));
-
-                    fetch("/", {
+                fetch("/", {
                         method: "POST",
-                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                        body: new URLSearchParams(formData).toString(),
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: new URLSearchParams(formData).toString()
                     })
                     .then(() => {
-                        if (myForm.getAttribute('name') === 'contact') {
-                            showThanksMessage("Thank You!", "Dear, we're checking your message. We'll get back to you soon!");
-                        } else if (myForm.getAttribute('name') === 'join-us') {
-                            showThanksMessage("Thank You!", "Thanks for joining! We will notify you with the latest updates.");
+                        hideModals();
+                        const thanksTitle = document.getElementById('thanks-title');
+                        const thanksMessage = document.getElementById('thanks-message');
+                        if (form.name === 'contact') {
+                            thanksTitle.textContent = "Message Sent!";
+                            thanksMessage.textContent = "Thanks for reaching out. We'll get back to you soon!";
+                        } else if (form.name === 'join-us') {
+                            thanksTitle.textContent = "Welcome Aboard!";
+                            thanksMessage.textContent = "Thank you for joining the TeenX community! We'll keep you updated.";
                         } else {
-                            showThanksMessage("Success!", "Thank you! We'll keep you updated.");
+                            thanksTitle.textContent = "Success!";
+                            thanksMessage.textContent = "Thank you! We'll keep you updated.";
                         }
-                        myForm.reset();
+                        showModal(thanksModal);
+                        form.reset();
                     })
-                    .catch(() => {
-                        alert("Form submission failed. Please try again.");
+                    .catch(error => {
+                        console.error("Form submission error:", error);
+                        const thanksTitle = document.getElementById('thanks-title');
+                        const thanksMessage = document.getElementById('thanks-message');
+                        thanksTitle.textContent = "Submission Failed!";
+                        thanksMessage.textContent = "There was an error submitting your form. Please try again later.";
+                        showModal(thanksModal);
                     });
-                });
+            };
+
+            document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
+                form.addEventListener('submit', handleFormSubmit);
             });
 
             // --- SCROLL REVEAL ANIMATIONS ---
