@@ -1964,82 +1964,44 @@
             });
 
             // --- FORM SUBMISSION (NETLIFY) ---
-            const handleFormSubmit = (event) => {
-                event.preventDefault();
-                const form = event.target;
-                const formData = new FormData(form);
+            // Helper for showing the thanks modal
+            function showThanksMessage(title, message) {
+                const thanksTitle = document.getElementById('thanks-title');
+                const thanksMessage = document.getElementById('thanks-message');
+                thanksTitle.textContent = title;
+                thanksMessage.textContent = message;
+                showModal(thanksModal);
+            }
 
-                // Netlify expects the form-name field in the POST body
-                formData.append("form-name", form.getAttribute("name"));
+            // Attach Netlify AJAX handler to all forms with data-netlify="true"
+            document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const myForm = event.target;
+                    const formData = new FormData(myForm);
 
-                fetch("/", {
+                    // Ensure Netlify form-name is present in POST body
+                    formData.append("form-name", myForm.getAttribute("name"));
+
+                    fetch("/", {
                         method: "POST",
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        body: new URLSearchParams(formData).toString()
+                        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                        body: new URLSearchParams(formData).toString(),
                     })
                     .then(() => {
-                                             // ...existing code...
-                        // --- FORM SUBMISSION (NETLIFY) ---
-                        function showThanksMessage(title, message) {
-                            const thanksTitle = document.getElementById('thanks-title');
-                            const thanksMessage = document.getElementById('thanks-message');
-                            thanksTitle.textContent = title;
-                            thanksMessage.textContent = message;
-                            showModal(thanksModal);
-                        }
-                        
-                        document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
-                            form.addEventListener('submit', (event) => {
-                                event.preventDefault();
-                                const myForm = event.target;
-                                const formData = new FormData(myForm);
-                        
-                                // Netlify requires form-name in the POST body
-                                formData.append("form-name", myForm.getAttribute("name"));
-                        
-                                fetch("/", {
-                                    method: "POST",
-                                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                                    body: new URLSearchParams(formData).toString(),
-                                })
-                                .then(() => {
-                                    if (myForm.getAttribute('name') === 'contact') {
-                                        showThanksMessage("Thank You!", "Dear, we're checking your message. We'll get back to you soon!");
-                                    } else if (myForm.getAttribute('name') === 'join-us') {
-                                        showThanksMessage("Thank You!", "Thanks for joining! We will notify you with the latest updates.");
-                                    } else {
-                                        showThanksMessage("Success!", "Thank you! We'll keep you updated.");
-                                    }
-                                    myForm.reset();
-                                })
-                                .catch(() => {
-                                    alert("Form submission failed. Please try again.");
-                                });
-                            });
-                        });
-                        // ...existing code...   hideModals();
-                        const thanksTitle = document.getElementById('thanks-title');
-                        const thanksMessage = document.getElementById('thanks-message');
-                        if (form.getAttribute('name') === 'contact') {
-                            thanksTitle.textContent = "Message Sent!";
-                            thanksMessage.textContent = "Thanks for reaching out. We'll get back to you soon!";
-                        } else if (form.getAttribute('name') === 'join-us') {
-                            thanksTitle.textContent = "Welcome Aboard!";
-                            thanksMessage.textContent = "Thank you for joining the TeenX community! We'll keep you updated.";
+                        if (myForm.getAttribute('name') === 'contact') {
+                            showThanksMessage("Thank You!", "Dear, we're checking your message. We'll get back to you soon!");
+                        } else if (myForm.getAttribute('name') === 'join-us') {
+                            showThanksMessage("Thank You!", "Thanks for joining! We will notify you with the latest updates.");
                         } else {
-                            thanksTitle.textContent = "Success!";
-                            thanksMessage.textContent = "Thank you! We'll keep you updated.";
+                            showThanksMessage("Success!", "Thank you! We'll keep you updated.");
                         }
-                        showModal(thanksModal);
-                        form.reset();
+                        myForm.reset();
                     })
-                    .catch(error => alert("Form submission failed. Please try again."));
-            };
-
-            document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
-                form.addEventListener('submit', handleFormSubmit);
+                    .catch(() => {
+                        alert("Form submission failed. Please try again.");
+                    });
+                });
             });
 
             // --- SCROLL REVEAL ANIMATIONS ---
