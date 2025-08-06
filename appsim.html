@@ -1203,7 +1203,7 @@
                         let chatHistory = [];
                         chatHistory.push({ role: "user", parts: [{ text: `Draft a concise incident report based on the following description, focusing on key details like who, what, when, where, and how. If any information is missing, suggest what else might be needed. Incident description: "${prompt}"` }] });
                         const payload = { contents: chatHistory };
-                        const apiKey = ""; // Canvas will automatically provide the API key
+                        const apiKey = "AIzaSyCqDwu5H5f1PjfYbq00B2b23m2P0zVK8vM"; // Canvas will automatically provide the API key
                         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
                         const response = await fetch(apiUrl, {
