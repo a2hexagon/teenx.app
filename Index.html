@@ -1980,13 +1980,13 @@
                         body: new URLSearchParams(formData).toString()
                     })
                     .then(() => {
-                        hideModals();
+       
                         const thanksTitle = document.getElementById('thanks-title');
                         const thanksMessage = document.getElementById('thanks-message');
                         if (form.getAttribute('name') === 'contact') {
                             thanksTitle.textContent = "Message Sent!";
                             thanksMessage.textContent = "Thanks for reaching out. We'll get back to you soon!";
-                        } else if (form.getAttribute('name') === 'join-us') {
+                        // } else if (form.getAttribute('name') === 'join-us') {
                             thanksTitle.textContent = "Welcome Aboard!";
                             thanksMessage.textContent = "Thank you for joining the TeenX community! We'll keep you updated.";
                         } else {
