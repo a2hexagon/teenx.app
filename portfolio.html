@@ -1,0 +1,375 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeenX Bangladesh — National Youth Development Infrastructure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        apple: {
+                            black: '#1d1d1f',
+                            bg: '#f5f5f7',
+                            blue: '#0066cc',
+                            gray: '#86868b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #ffffff; color: #1d1d1f; -webkit-font-smoothing: antialiased; overflow-x: hidden; scroll-behavior: smooth; }
+        .apple-glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
+        .glass-card { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px) saturate(160%); border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04); transition: all 0.5s cubic-bezier(0.2, 0, 0, 1); }
+        .hero-text { letter-spacing: -0.025em; line-height: 1.1; }
+        [x-cloak] { display: none !important; }
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s cubic-bezier(0.2, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        /* Netlify Form Styles */
+        input:focus, textarea:focus { outline: none; border-color: #0066cc; ring: 2px; ring-color: rgba(0, 102, 204, 0.1); }
+    </style>
+</head>
+<body x-data="{ mobileMenu: false, activeTab: 'leadership' }" :class="mobileMenu ? 'overflow-hidden' : ''">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[110] apple-glass border-b border-gray-200/40">
+        <div class="container-custom h-[52px] flex justify-between items-center text-[11px] font-bold uppercase tracking-wider">
+            <div class="flex items-center space-x-10">
+                <a href="#" class="text-xl font-extrabold tracking-tighter normal-case">TEENX</a>
+                <div class="hidden lg:flex space-x-8 text-apple-black/60">
+                    <a href="#structure" class="hover:text-apple-black transition">Structure</a>
+                    <a href="#roadmap" class="hover:text-apple-black transition">Roadmap</a>
+                    <a href="#governance" class="hover:text-apple-black transition">Governance</a>
+                    <a href="#network" class="hover:text-apple-black transition">Network</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="#join" class="hidden sm:inline-block bg-apple-black text-white px-5 py-2 rounded-full hover:bg-opacity-90 transition">Apply for Membership</a>
+                <button @click="mobileMenu = !mobileMenu" class="lg:hidden relative w-8 h-8 flex flex-col justify-center items-center">
+                    <span class="block w-6 h-0.5 bg-apple-black transition-all" :class="mobileMenu ? 'rotate-45 translate-y-1' : '-translate-y-1'"></span>
+                    <span class="block w-6 h-0.5 bg-apple-black transition-all" :class="mobileMenu ? '-rotate-45 -translate-y-0' : 'translate-y-1'"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div x-show="mobileMenu" x-cloak class="lg:hidden fixed inset-0 top-[52px] apple-glass z-[100] px-8 py-10 flex flex-col h-screen overflow-y-auto">
+            <div class="flex flex-col space-y-4">
+                <a href="#structure" @click="mobileMenu = false" class="py-4 text-3xl font-bold border-b border-black/5">Structure</a>
+                <a href="#roadmap" @click="mobileMenu = false" class="py-4 text-3xl font-bold border-b border-black/5">Roadmap</a>
+                <a href="#governance" @click="mobileMenu = false" class="py-4 text-3xl font-bold border-b border-black/5">Governance</a>
+                <a href="#network" @click="mobileMenu = false" class="py-4 text-3xl font-bold border-b border-black/5">Network</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="pt-40 pb-20 md:pt-56 md:pb-32 px-6">
+        <div class="container-custom text-center reveal active">
+            <span class="text-apple-blue font-bold text-xs uppercase tracking-[0.3em] mb-6 block">National Excellence Infrastructure</span>
+            <h1 class="hero-text text-[40px] sm:text-7xl md:text-[90px] font-bold mb-8">Architecting the <br> <span class="text-apple-blue">Next Generation.</span></h1>
+            <p class="text-lg md:text-2xl text-apple-gray max-w-3xl mx-auto font-medium mb-12">
+                TeenX Bangladesh is the premier institutional body dedicated to scaling youth-led innovation into sustainable national policies and frameworks.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <a href="#join" class="w-full sm:w-auto bg-apple-blue text-white px-10 py-4 rounded-full font-bold text-sm shadow-xl shadow-blue-500/20 transition hover:scale-105">Join the Secretariat</a>
+                <a href="#governance" class="text-apple-black font-semibold text-sm hover:underline">Download Audit 2024 ›</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Institutional Structure (Tabs) -->
+    <section id="structure" class="py-24 bg-apple-bg">
+        <div class="container-custom">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Institutional Hierarchy</h2>
+                <div class="flex justify-center mt-10 space-x-2 p-1 bg-gray-200/50 rounded-full max-w-md mx-auto">
+                    <button @click="activeTab = 'leadership'" :class="activeTab === 'leadership' ? 'bg-white shadow-sm' : ''" class="flex-1 py-2 px-6 rounded-full text-[11px] font-bold transition">Leadership</button>
+                    <button @click="activeTab = 'secretariat'" :class="activeTab === 'secretariat' ? 'bg-white shadow-sm' : ''" class="flex-1 py-2 px-6 rounded-full text-[11px] font-bold transition">Secretariat</button>
+                </div>
+            </div>
+
+            <div x-show="activeTab === 'leadership'" class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal">
+                <!-- Executive Roles -->
+                <div class="glass-card rounded-[2rem] p-8 text-center">
+                    <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-6 overflow-hidden">
+                        <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold">Executive Director</h3>
+                    <p class="text-apple-blue text-xs font-bold uppercase tracking-widest mt-2">Strategic Vision</p>
+                    <p class="text-apple-gray text-sm mt-4">Oversees national policy alignment and global stakeholder relations.</p>
+                </div>
+                <div class="glass-card rounded-[2rem] p-8 text-center">
+                    <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-6 overflow-hidden">
+                        <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold">Chief of Operations</h3>
+                    <p class="text-apple-blue text-xs font-bold uppercase tracking-widest mt-2">Program Execution</p>
+                    <p class="text-apple-gray text-sm mt-4">Directs district-level envoy networks and operational transparency.</p>
+                </div>
+                <div class="glass-card rounded-[2rem] p-8 text-center">
+                    <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-6 overflow-hidden">
+                        <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold">Director of Research</h3>
+                    <p class="text-apple-blue text-xs font-bold uppercase tracking-widest mt-2">Innovation & Policy</p>
+                    <p class="text-apple-gray text-sm mt-4">Leads the data-driven policy drafting team and technical research units.</p>
+                </div>
+            </div>
+
+            <div x-show="activeTab === 'secretariat'" class="grid grid-cols-2 md:grid-cols-4 gap-6 reveal">
+                <!-- Secretariat Departments -->
+                <div class="p-6 border-l-2 border-apple-blue">
+                    <h4 class="font-bold">FinOps</h4>
+                    <p class="text-apple-gray text-xs mt-2">Financial auditing & sustainability management.</p>
+                </div>
+                <div class="p-6 border-l-2 border-apple-blue">
+                    <h4 class="font-bold">Legal & Policy</h4>
+                    <p class="text-apple-gray text-xs mt-2">Legislative drafting and compliance units.</p>
+                </div>
+                <div class="p-6 border-l-2 border-apple-blue">
+                    <h4 class="font-bold">Communications</h4>
+                    <p class="text-apple-gray text-xs mt-2">National outreach and media architecture.</p>
+                </div>
+                <div class="p-6 border-l-2 border-apple-blue">
+                    <h4 class="font-bold">IT Infrastructure</h4>
+                    <p class="text-apple-gray text-xs mt-2">Digital platform scaling and data security.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Roadmap -->
+    <section id="roadmap" class="py-24 bg-white">
+        <div class="container-custom">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-16 reveal">Vision 2030 Roadmap</h2>
+            <div class="space-y-12">
+                <div class="flex flex-col md:flex-row gap-8 reveal">
+                    <div class="md:w-32 flex-shrink-0">
+                        <span class="text-3xl font-black text-apple-blue opacity-30">2026</span>
+                    </div>
+                    <div class="flex-grow pb-12 border-b border-gray-100">
+                        <h4 class="text-2xl font-bold mb-4">Infrastructure Consolidation</h4>
+                        <p class="text-apple-gray max-w-2xl">Finalizing the 64-district envoy model and establishing the National Youth Data Center.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8 reveal" style="transition-delay: 0.1s">
+                    <div class="md:w-32 flex-shrink-0">
+                        <span class="text-3xl font-black text-apple-blue opacity-30">2027</span>
+                    </div>
+                    <div class="flex-grow pb-12 border-b border-gray-100">
+                        <h4 class="text-2xl font-bold mb-4">Policy Integration</h4>
+                        <p class="text-apple-gray max-w-2xl">Presenting the first comprehensive Youth Inclusion Act draft to the national legislative bodies.</p>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row gap-8 reveal" style="transition-delay: 0.2s">
+                    <div class="md:w-32 flex-shrink-0">
+                        <span class="text-3xl font-black text-apple-blue opacity-30">2030</span>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="text-2xl font-bold mb-4">Regional Leadership Hub</h4>
+                        <p class="text-apple-gray max-w-2xl">Scaling the TeenX framework to South Asian neighbor states through the Global Youth Accord.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Governance & Transparency (Document Vault) -->
+    <section id="governance" class="py-24 bg-apple-bg">
+        <div class="container-custom">
+            <div class="flex flex-col lg:flex-row gap-16">
+                <div class="lg:w-1/3 reveal">
+                    <h2 class="text-4xl font-bold mb-6">Institutional Transparency</h2>
+                    <p class="text-apple-gray leading-relaxed mb-8">
+                        We believe in radical transparency. Every Taka spent and every policy drafted is documented and open for public review.
+                    </p>
+                    <a href="#" class="inline-flex items-center text-apple-blue font-bold text-sm tracking-wide">
+                        VIEW GOVERNANCE FRAMEWORK 
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </a>
+                </div>
+                <div class="lg:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-4 reveal">
+                    <div class="bg-white p-6 rounded-3xl border border-gray-200 flex justify-between items-center group cursor-pointer hover:border-apple-blue transition">
+                        <div>
+                            <p class="text-[10px] font-bold text-apple-gray uppercase tracking-widest mb-1">Financial Report</p>
+                            <h5 class="font-bold">Annual Audit 2024</h5>
+                        </div>
+                        <div class="text-apple-blue opacity-0 group-hover:opacity-100 transition">PDF</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl border border-gray-200 flex justify-between items-center group cursor-pointer hover:border-apple-blue transition">
+                        <div>
+                            <p class="text-[10px] font-bold text-apple-gray uppercase tracking-widest mb-1">Legislative</p>
+                            <h5 class="font-bold">Constitution of TeenX</h5>
+                        </div>
+                        <div class="text-apple-blue opacity-0 group-hover:opacity-100 transition">PDF</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl border border-gray-200 flex justify-between items-center group cursor-pointer hover:border-apple-blue transition">
+                        <div>
+                            <p class="text-[10px] font-bold text-apple-gray uppercase tracking-widest mb-1">Impact Study</p>
+                            <h5 class="font-bold">Digital Literacy ROI</h5>
+                        </div>
+                        <div class="text-apple-blue opacity-0 group-hover:opacity-100 transition">PDF</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-3xl border border-gray-200 flex justify-between items-center group cursor-pointer hover:border-apple-blue transition">
+                        <div>
+                            <p class="text-[10px] font-bold text-apple-gray uppercase tracking-widest mb-1">Strategy</p>
+                            <h5 class="font-bold">2026 Procurement Plan</h5>
+                        </div>
+                        <div class="text-apple-blue opacity-0 group-hover:opacity-100 transition">PDF</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Network Map -->
+    <section id="network" class="py-24 bg-white overflow-hidden">
+        <div class="container-custom">
+            <div class="flex flex-col md:flex-row items-center gap-16 reveal">
+                <div class="md:w-1/2">
+                    <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-8">National Digital Infrastructure</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-apple-blue font-bold flex-shrink-0">64</div>
+                            <p class="text-apple-gray">District Envoys acting as local governance monitors.</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-apple-blue font-bold flex-shrink-0">08</div>
+                            <p class="text-apple-gray">Divisional Hubs for localized resource distribution.</p>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-apple-blue font-bold flex-shrink-0">01</div>
+                            <p class="text-apple-gray">Central Secretariat in Dhaka managing global affairs.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <!-- Placeholder for Map Interaction -->
+                    <div class="aspect-square bg-apple-bg rounded-full border-4 border-white shadow-2xl flex items-center justify-center overflow-hidden">
+                        <div class="text-center p-12">
+                            <svg class="w-32 h-32 mx-auto text-apple-blue/20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+                            <p class="mt-4 font-bold text-apple-gray uppercase tracking-widest text-xs">Interactive Delta Map</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Section (Netlify Forms) -->
+    <section id="join" class="py-24 bg-apple-black text-white rounded-[4rem] mx-6 my-12">
+        <div class="container-custom">
+            <div class="max-w-3xl mx-auto text-center reveal">
+                <h2 class="text-4xl md:text-6xl font-bold mb-8">Join the National Secretariat</h2>
+                <p class="text-white/60 text-lg mb-12">We are looking for policy analysts, software engineers, and social strategists to build the future of Bangladesh.</p>
+                
+                <form name="secretariat-application" method="POST" data-netlify="true" class="text-left space-y-6 glass-card border-white/10 p-8 rounded-[2rem]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-white/40">Full Name</label>
+                            <input type="text" name="name" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:bg-white/10 transition">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-white/40">Email Address</label>
+                            <input type="email" name="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:bg-white/10 transition">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-white/40">Area of Expertise</label>
+                        <select name="expertise" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white appearance-none">
+                            <option value="policy" class="bg-black">Policy & Research</option>
+                            <option value="tech" class="bg-black">Tech & Engineering</option>
+                            <option value="ops" class="bg-black">Operations & Finance</option>
+                            <option value="comm" class="bg-black">Strategic Communications</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold uppercase tracking-widest text-white/40">Cover Note (Brief)</label>
+                        <textarea name="message" rows="4" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:bg-white/10 transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-white text-apple-black font-bold py-4 rounded-xl hover:bg-opacity-90 transition">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners (Marquee Placeholder) -->
+    <section class="py-16">
+        <div class="container-custom">
+            <p class="text-center text-[10px] font-bold text-apple-gray uppercase tracking-[0.4em] mb-12">Global Strategic Affiliations</p>
+            <div class="flex flex-wrap justify-center items-center gap-12 grayscale opacity-40">
+                <span class="text-xl font-bold tracking-tighter">UNESCO</span>
+                <span class="text-xl font-bold tracking-tighter">USAID</span>
+                <span class="text-xl font-bold tracking-tighter">UNICEF</span>
+                <span class="text-xl font-bold tracking-tighter">WORLD BANK</span>
+                <span class="text-xl font-bold tracking-tighter">BRAC</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white pt-24 pb-12 px-6 border-t border-gray-100">
+        <div class="container-custom">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
+                <div class="md:col-span-2">
+                    <h2 class="text-2xl font-bold tracking-tighter mb-6">TEENX BANGLADESH</h2>
+                    <p class="text-apple-gray text-sm leading-relaxed max-w-sm">
+                        Building the institutional standards for youth-led innovation and national policy inclusion.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="text-[10px] font-bold uppercase tracking-widest mb-6">Explore</h5>
+                    <ul class="text-xs text-apple-gray space-y-3 font-bold uppercase tracking-wider">
+                        <li><a href="#" class="hover:text-apple-black">Secretariat</a></li>
+                        <li><a href="#" class="hover:text-apple-black">Press Releases</a></li>
+                        <li><a href="#" class="hover:text-apple-black">Brand Assets</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-[10px] font-bold uppercase tracking-widest mb-6">Legal</h5>
+                    <ul class="text-xs text-apple-gray space-y-3 font-bold uppercase tracking-wider">
+                        <li><a href="#" class="hover:text-apple-black">Data Privacy</a></li>
+                        <li><a href="#" class="hover:text-apple-black">NGO Compliance</a></li>
+                        <li><a href="#" class="hover:text-apple-black">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center text-[9px] text-apple-gray font-bold uppercase tracking-[0.3em] pt-10 border-t border-gray-100">
+                <p>© 2026 TeenX Bangladesh. A National Youth Initiative.</p>
+                <div class="flex space-x-8 mt-4 md:mt-0">
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
+
